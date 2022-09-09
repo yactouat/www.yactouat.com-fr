@@ -43,12 +43,10 @@ main {
     grid-column: 1 / -1;
     position: relative;
 }
-/* TODO specific class or id for hero image */
 img {
     width: 100%;
     object-fit: cover;
 }
-/* TODO factorization for title and subtitle in order */
 .hero-title {
     text-align: center;
     color: orangered;
@@ -107,7 +105,6 @@ img {
     float: left;
     margin-right: 1rem;
 }
-/* TODO target HR's more specifically */
 hr {
     margin: 1.5rem 0;
     border: 1px solid rgba(120, 120, 120, 0.6);
