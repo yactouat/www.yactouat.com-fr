@@ -20,8 +20,18 @@ final class ConfTest extends TestCase {
         $this->assertTrue(Conf::checkDevConf());
     }
 
+    public function testCheckDevConfWithIncorrectConfReturnsFalse() {
+        ini_set("display_errors", 0);
+        $this->assertFalse(Conf::checkDevConf());
+    }
+
     public function testCheckSharedConf() {
         $this->assertTrue(Conf::checkSharedConf());
+    }
+
+    public function testCheckSharedConfWithIncorrectConfReturnsFalse() {
+        ini_set("error_reporting", E_ERROR);
+        $this->assertFalse(Conf::checkSharedConf());
     }
 
 }
