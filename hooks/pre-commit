@@ -3,7 +3,7 @@
 
 echo PHP_EOL."Running PHPUnit tests...".PHP_EOL;
 
-exec('docker exec -t wwwyactouatdotcom-php-1 bash -c "/var/www/html/vendor/bin/phpunit /var/www/html/tests"', $output, $returnCode);
+exec('docker exec -t wwwyactouatdotcom-app-1 bash -c "/var/www/html/vendor/bin/phpunit /var/www/html/tests"', $output, $returnCode);
 
 echo PHP_EOL . implode(PHP_EOL, $output) . PHP_EOL;
 
