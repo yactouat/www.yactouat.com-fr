@@ -17,11 +17,12 @@
         - [locally](#locally)
     - [Deployment](#deployment)
         - [first deployment steps](#first-deployment-steps)
-        - [deployment flow: from Docker image to Cloud Run](#deployment-flow-from-docker-image-to-cloud-run)
+        - [manual deployment flow: from Docker image to Cloud Run](#manual-deployment-flow-from-docker-image-to-cloud-run)
             - [build and push the backend API image to Google Cloud Artifact Registry](#build-and-push-the-backend-api-image-to-google-cloud-artifact-registry)
                 - [for PHP](#for-php)
             - [deploy the image on Cloud Run](#deploy-the-image-on-cloud-run)
                 - [a live staging env out of the box](#a-live-staging-env-out-of-the-box)
+        - [automatic deployment](#automatic-deployment)
 
 <!-- /TOC -->
 
@@ -100,7 +101,7 @@ we use GCP Cloud Run to deploy this app'
 - authenticate your local Docker install to Artifact Registry, replacing the placeholders (without the `{}`, to replace with the relevant Google Cloud region) => `gcloud auth configure-docker {gCloudRegion}-docker.pkg.dev`
 - create a Docker repository in the artifact registry
 
-### deployment flow: from Docker image to Cloud Run
+### manual deployment flow: from Docker image to Cloud Run
 
 #### build and push the backend API image to Google Cloud Artifact Registry
 
@@ -121,4 +122,17 @@ we use GCP Cloud Run to deploy this app'
 
 ##### a live staging env out of the box
 
-when you deployed your Cloud Run instance, every revision that will make on it will have the same TLS protected URL out of the box ! I consider this URL to be a safe place to test stuff in real world conditions; for instance, you could deploy a different service for each locale so you can try internationalization without even having to point any domain to the real thing ;)
+when you deployed your Cloud Run instance, every revision that will make on it will have the same TLS protected URL out of the box ! I consider this URL to be a safe place to test stuff in real world conditions; for instance, you could deploy a different service for each locale so you can try internationalization without even having to point any domain to the real thing ;) add build triggers on top of that and you'll be able to do fairly complex stuff without the headaches ! this is why I like Google Cloud Platform so much :)
+
+### automatic deployment
+
+I thought I was about to read endless docs and writing countless YAML files in trial and error mode before setting up continuous deployment of the app'; surprisingly, it literally took the push of a button to do so =>
+
+- go to your created Cloud Run service
+- right below the main UI header you'll find a `SET UP CONTINUOUS DEPLOYMENT` button (it says `EDIT` in the pic because I already used it)
+![create continuous deployment button](./public/docs/gcp/create_cd_btn.png)
+- when you click on this, just follow the steps, which are:
+  - selecting the branch(es) from where you want to trigger builds on push (this may prompt you to choose your GitHub providers and connect specific or all repos)
+  - selecting the Dockerfile that you want to build, one limitation though is that the build context will be the folder where the Dockerfile lives, so you may need to create a CI Dockerfile at the root of the repo if your prod Dockerfile is nested somewhere...
+- now, every time a commit is pushed to the triggering branch, it will be automatically deployed 🆒
+- however, the deployed image wont be pushed to the Artifact Registry, as it was the case with manual deploys; but it is pushed to the Container Registry instead... still trying to figure out how to sync both registries 🤔
