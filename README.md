@@ -21,6 +21,7 @@
             - [build and push the backend API image to Google Cloud Artifact Registry](#build-and-push-the-backend-api-image-to-google-cloud-artifact-registry)
                 - [for PHP](#for-php)
             - [deploy the image on Cloud Run](#deploy-the-image-on-cloud-run)
+                - [a live staging env out of the box](#a-live-staging-env-out-of-the-box)
 
 <!-- /TOC -->
 
@@ -89,7 +90,10 @@ we use GCP Cloud Run to deploy this app'
 - have a GCP project ready and make sure billing is enabled for it
 - GCP APIs that must be enabled in your project (you can do this from your GCP browser console) =>
   - `Artifact Registry API`
+  - `Cloud Build API`
   - `Compute Engine API`
+  - `Container Analysis API`
+- you may need to [connect your GCP identity/repo to GitHub](https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github)
 - initialize `gcloud` CLI => `gcloud init`
 - then set the project ID =>  `gcloud config set project PROJECT_ID`
 - set your default region, replacing the placeholders (without the `{}`, to replace with the relevant Google Cloud region, for instance `europe-west6`) => `gcloud config set run/region {gCloudRegion}`
@@ -105,6 +109,7 @@ we use GCP Cloud Run to deploy this app'
 
 ##### for PHP
 
+- make sure the `php.ci.Dockerfile` is in sync with `./docker/php/prod.Dockerfile`
 - make sure the `composer.json.prod` is in sync with `composer.json` (minus unwanted scripts and dev dependencies)
 
 #### deploy the image on Cloud Run
@@ -113,3 +118,7 @@ we use GCP Cloud Run to deploy this app'
 - if you have permissions issues because you are running this for the first time, just wait a few minutes and retry later
 - when prompted, allow for unauthenticated invocations if it's a public API
 - when app' deployed, the wizard should reveal the service URL that you can visit in your browser
+
+##### a live staging env out of the box
+
+when you deployed your Cloud Run instance, every revision that will make on it will have the same TLS protected URL out of the box ! I consider this URL to be a safe place to test stuff in real world conditions; for instance, you could deploy a different service for each locale so you can try internationalization without even having to point any domain to the real thing ;)
