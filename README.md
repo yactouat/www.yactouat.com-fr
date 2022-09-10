@@ -136,3 +136,4 @@ I thought I was about to read endless docs and writing countless YAML files in t
   - selecting the Dockerfile that you want to build, one limitation though is that the build context will be the folder where the Dockerfile lives, so you may need to create a CI Dockerfile at the root of the repo if your prod Dockerfile is nested somewhere...
 - now, every time a commit is pushed to the triggering branch, it will be automatically deployed 🆒
 - however, the deployed image wont be pushed to the Artifact Registry, as it was the case with manual deploys; but it is pushed to the Container Registry instead... still trying to figure out how to sync both registries 🤔
+- that means if you manually deploy a new container image, it will be overridden the next time the Cloud Build trigger runs
