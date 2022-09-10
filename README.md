@@ -12,12 +12,14 @@
     - [Documentation](#documentation)
         - [PHP code](#php-code)
             - [generate the docs](#generate-the-docs)
+            - [view the docs](#view-the-docs)
     - [CI/CD](#cicd)
         - [locally](#locally)
     - [Deployment](#deployment)
         - [first deployment steps](#first-deployment-steps)
         - [deployment flow: from Docker image to Cloud Run](#deployment-flow-from-docker-image-to-cloud-run)
             - [build and push the backend API image to Google Cloud Artifact Registry](#build-and-push-the-backend-api-image-to-google-cloud-artifact-registry)
+                - [for PHP](#for-php)
             - [deploy the image on Cloud Run](#deploy-the-image-on-cloud-run)
 
 <!-- /TOC -->
@@ -46,6 +48,7 @@ my personal website take #999999999999, app' may be in French or in English, hen
 ### QA
 
 - no conf error message on going to `/`
+- go to `/docs` and check documentation for any class
 
 ## Documentation
 
@@ -61,6 +64,10 @@ my personal website take #999999999999, app' may be in French or in English, hen
   - <https://docs.phpdoc.org/3.0/guide/guides/docblocks.html>
   - <https://docs.phpdoc.org/3.0/guide/guides/types.html>
 - the documentation configuration is described in `phpdoc.dist.xml`
+
+#### view the docs
+
+on any environment/deployment, view the docs at `/docs`
 
 ## CI/CD
 
@@ -95,6 +102,10 @@ we use GCP Cloud Run to deploy this app'
 
 - build and tag the relevant Docker image locally, replacing the placeholders (without the `{}`, to replace with the data of your Google Cloud project) => `docker build -t {gCloudRegion}-docker.pkg.dev/{projectId}/{nameOfTheArtifactRegistryRepo}/{nameOfYourContainer}:{tag} -f ./docker/{languageFolder}/prod.Dockerfile .`
 - push the images to the Artifact Registry, replacing the placeholders (without the `{}`, to replace with the data of your Google Cloud project) => `docker push {gCloudRegion}-docker.pkg.dev/{projectId}/{nameOfTheArtifactRegistryRepo}/{nameOfYourContainer}:{tag}`
+
+##### for PHP
+
+- make sure the `composer.json.prod` is in sync with `composer.json` (minus unwanted scripts and dev dependencies)
 
 #### deploy the image on Cloud Run
 
