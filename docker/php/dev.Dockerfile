@@ -36,6 +36,9 @@ WORKDIR /var/www/html
 # installing Composer deps, the vendor folder will only be populated inside the container
 RUN composer install
 
+# setting the app' environment
+ENV APP_ENV="DEV"
+
 # running Apache
 CMD apache2-foreground
 
