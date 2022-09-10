@@ -9,12 +9,17 @@
     - [test the app'](#test-the-app)
         - [automated](#automated)
         - [QA](#qa)
+    - [Documentation](#documentation)
+        - [PHP code](#php-code)
+            - [generate the docs](#generate-the-docs)
+            - [view the docs](#view-the-docs)
     - [CI/CD](#cicd)
         - [locally](#locally)
     - [Deployment](#deployment)
         - [first deployment steps](#first-deployment-steps)
         - [deployment flow: from Docker image to Cloud Run](#deployment-flow-from-docker-image-to-cloud-run)
             - [build and push the backend API image to Google Cloud Artifact Registry](#build-and-push-the-backend-api-image-to-google-cloud-artifact-registry)
+                - [for PHP](#for-php)
             - [deploy the image on Cloud Run](#deploy-the-image-on-cloud-run)
 
 <!-- /TOC -->
@@ -43,13 +48,36 @@ my personal website take #999999999999, app' may be in French or in English, hen
 ### QA
 
 - no conf error message on going to `/`
+- go to `/docs` and check documentation for any class
+
+## Documentation
+
+### PHP code
+
+#### generate the docs
+
+- we use [phpDocumentor](https://www.phpdoc.org/) and it's [PHAR executable](https://phpdoc.org/phpDocumentor.phar)
+- make sure you have downloaded the PHAR provided in the link above
+- to generate the documentation, just run => `php phpDocumentor.phar`
+- to get a feel at how to write PHP doc blocks, check out =>
+  - <https://docs.phpdoc.org/3.0/guide/getting-started/what-is-a-docblock.html>
+  - <https://docs.phpdoc.org/3.0/guide/guides/docblocks.html>
+  - <https://docs.phpdoc.org/3.0/guide/guides/types.html>
+- the documentation configuration is described in `phpdoc.dist.xml`
+
+#### view the docs
+
+on any environment/deployment, view the docs at `/docs`
 
 ## CI/CD
 
 ### locally
 
-- `composer install --ignore-platform-reqs` to execute post deps install script that will copy the pre commit hook that includes tests in the `.git` folder (and also to benefit from code intellisense in your IDE)
-- `git add . && git commit -m "initial commit"` => see the magic of a local testing pipeline happening !
+- application stack must be up with a `docker compose up`
+- `composer install --ignore-platform-reqs` to execute post deps install script that will copy the pre commit hook that includes tests in the `.git` folder (and also to benefit from code intellisense in your IDE); also, if you modify a hook in the `hooks` folder, dont forget to re run a composer install so it's re copied in the `.git` folder
+- `git add . && git commit -m "initial commit"` =>
+  - see the magic of a local testing pipeline happening !
+  - see the PHP documentation generated in `./public/docs`
 
 ## Deployment
 
@@ -74,6 +102,10 @@ we use GCP Cloud Run to deploy this app'
 
 - build and tag the relevant Docker image locally, replacing the placeholders (without the `{}`, to replace with the data of your Google Cloud project) => `docker build -t {gCloudRegion}-docker.pkg.dev/{projectId}/{nameOfTheArtifactRegistryRepo}/{nameOfYourContainer}:{tag} -f ./docker/{languageFolder}/prod.Dockerfile .`
 - push the images to the Artifact Registry, replacing the placeholders (without the `{}`, to replace with the data of your Google Cloud project) => `docker push {gCloudRegion}-docker.pkg.dev/{projectId}/{nameOfTheArtifactRegistryRepo}/{nameOfYourContainer}:{tag}`
+
+##### for PHP
+
+- make sure the `composer.json.prod` is in sync with `composer.json` (minus unwanted scripts and dev dependencies)
 
 #### deploy the image on Cloud Run
 
