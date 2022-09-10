@@ -2,6 +2,9 @@
 
 namespace App;
 
+/**
+ * this class is responsible for managing configuration for all and each envs
+ */
 final class Conf {
 
     /**
@@ -25,7 +28,7 @@ final class Conf {
      * - `error_reporting` is supposed to be `E_ALL`
      * - `log_errors` is supposed to be on
      *
-     * @return bool
+     * @return bool whether the conf is valid
      */
     public static function checkSharedConf(): bool {
         return ini_get("error_reporting") == E_ALL && ini_get("log_errors") == 1;

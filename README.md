@@ -9,6 +9,9 @@
     - [test the app'](#test-the-app)
         - [automated](#automated)
         - [QA](#qa)
+    - [Documentation](#documentation)
+        - [PHP code](#php-code)
+            - [generate the docs](#generate-the-docs)
     - [CI/CD](#cicd)
         - [locally](#locally)
     - [Deployment](#deployment)
@@ -44,12 +47,30 @@ my personal website take #999999999999, app' may be in French or in English, hen
 
 - no conf error message on going to `/`
 
+## Documentation
+
+### PHP code
+
+#### generate the docs
+
+- we use [phpDocumentor](https://www.phpdoc.org/) and it's [PHAR executable](https://phpdoc.org/phpDocumentor.phar)
+- make sure you have downloaded the PHAR provided in the link above
+- to generate the documentation, just run => `php phpDocumentor.phar`
+- to get a feel at how to write PHP doc blocks, check out =>
+  - <https://docs.phpdoc.org/3.0/guide/getting-started/what-is-a-docblock.html>
+  - <https://docs.phpdoc.org/3.0/guide/guides/docblocks.html>
+  - <https://docs.phpdoc.org/3.0/guide/guides/types.html>
+- the documentation configuration is described in `phpdoc.dist.xml`
+
 ## CI/CD
 
 ### locally
 
-- `composer install --ignore-platform-reqs` to execute post deps install script that will copy the pre commit hook that includes tests in the `.git` folder (and also to benefit from code intellisense in your IDE)
-- `git add . && git commit -m "initial commit"` => see the magic of a local testing pipeline happening !
+- application stack must be up with a `docker compose up`
+- `composer install --ignore-platform-reqs` to execute post deps install script that will copy the pre commit hook that includes tests in the `.git` folder (and also to benefit from code intellisense in your IDE); also, if you modify a hook in the `hooks` folder, dont forget to re run a composer install so it's re copied in the `.git` folder
+- `git add . && git commit -m "initial commit"` =>
+  - see the magic of a local testing pipeline happening !
+  - see the PHP documentation generated in `./public/docs`
 
 ## Deployment
 
