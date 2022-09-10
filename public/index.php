@@ -13,4 +13,5 @@ if (!Conf::checkDevConf() || !Conf::checkSharedConf()) {
     die("conf KO");
 }
 
-echo "it works in env ".getenv(Constants::APP_ENV, true).PHP_EOL;
+echo "it works in env ".getenv(Constants::APP_ENV, true)."\n";
+echo "cloud build addition";
