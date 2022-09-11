@@ -1,3 +1,12 @@
+/* variables */
+:root {
+    --background-color: rgb(0, 0, 0, 0.85);
+    --brand-secondary-color: #ff4500;
+    --content-primary-color: white;
+    --content-tertiary-color: #00baaf;
+    --muted-color: rgba(255, 255, 255, 0.5);
+}
+
 /* general styles */
 *, ::before, ::after {
     padding: 0;
@@ -11,8 +20,8 @@ html {
 }
 body {
     font-family: "Baskervville", serif;
-    color: linen;
-    background-color: rgb(20,30,40);
+    color: var(--content-primary-color);
+    background-color: var(--background-color);
 }
 h1 {
     font-family: "Anton", sans-serif;
@@ -22,7 +31,7 @@ h2, h3, h4, h5, h6 {
 }
 a {
     text-decoration: none;
-    color: linen;
+    color: var(--content-primary-color);
 }
 main {
     display: grid;
@@ -49,13 +58,13 @@ img {
 }
 .hero-title {
     text-align: center;
-    color: orangered;
+    color: var(--brand-secondary-color);
     font-size: 8rem;
 }
 .hero-subtitle {
     font-size: 2.4rem;
     text-align: center;
-    color: orangered;
+    color: var(--brand-secondary-color);
 }
 .social-icons {
     display: grid;
@@ -70,11 +79,8 @@ img {
     font-size: 2rem;
     font-family: "Raleway", sans-serif;
 }
-.author-name a:hover {
-    background-color: #306203;
-}
 .publish-date {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--muted-color);
 }
 @media only screen and (max-width:550px) {
     .hero-title {
@@ -101,16 +107,16 @@ img {
 }
 .first-paragraph::first-letter {
     font-size: 6rem;
-    color:orangered;
+    color:var(--brand-secondary-color);
     float: left;
     margin-right: 1rem;
 }
 hr {
     margin: 1.5rem 0;
-    border: 1px solid rgba(120, 120, 120, 0.6);
+    border: 1px solid var(--muted-color);
 }
 .quote {
-    color: #00beef;
+    color: var(--content-tertiary-color);
     font-size: 2.4rem;
     text-align: center;
     font-family: "Raleway", sans-serif;
@@ -142,7 +148,7 @@ hr {
     margin-bottom: 1.5rem;
 }
 .list-title, .list-subtitle {
-    color: #00beef;
+    color: var(--content-tertiary-color);
 }
 .image-wrapper {
     display: grid;

@@ -14,4 +14,3 @@ if (!Conf::checkDevConf() || !Conf::checkSharedConf()) {
 }
 
 echo "it works in env ".getenv(Constants::APP_ENV, true)."\n";
-echo "cloud build addition";
