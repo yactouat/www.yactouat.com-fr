@@ -49,8 +49,8 @@ my personal website take #999999999999, app' may be in French or in English, hen
 
 ### QA
 
-- no conf error message on going to `/`
-- go to `/docs` and check documentation for any class
+- no conf error message on going to `/` + 200 status code
+- go to `/docs` and check documentation for any class + 200 status codes
 
 ## Documentation
 
@@ -102,6 +102,8 @@ we use GCP Cloud Run to deploy this app'
 - create a Docker repository in the artifact registry
 
 ### manual deployment flow: from Docker image to Cloud Run
+
+manual deploys are useful during the development process, if you want to see the results live in dev or staging environment
 
 #### build and push the backend API image to Google Cloud Artifact Registry
 
