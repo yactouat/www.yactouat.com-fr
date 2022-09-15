@@ -1,5 +1,7 @@
 # www.yactouat.com-fr
 
+[![GitHub Super-Linter](https://github.com/yactouat/www.yactouat.com-fr/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
+
 <!-- TOC -->
 
 - [www.yactouat.com-fr](#wwwyactouatcom-fr)
