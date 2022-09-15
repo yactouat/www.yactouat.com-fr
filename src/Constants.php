@@ -2,10 +2,9 @@
 
 namespace App;
 
-final class Constants {
-
-    const APP_ENV = "APP_ENV";
-    const DEV_ENV = "DEV";
-    const PROD_ENV = "PROD";
-
+final class Constants
+{
+    public const APP_ENV = "APP_ENV";
+    public const DEV_ENV = "DEV";
+    public const PROD_ENV = "PROD";
 }

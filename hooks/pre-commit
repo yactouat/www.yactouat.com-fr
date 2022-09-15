@@ -2,13 +2,23 @@
 <?php
 /**
  * pre commit hook to copy in the ./git/hooks folder
- * 
+ *
  * ! don't forget it to make it executable
- * 
- * using a Docker running PHP container, checks if
- * - PHPUnit tests pass
+ *
+ * using a Docker running PHP container,
+ * TODO - lints PHP code in
+ *  - src
+ *  - tests
+ * - checks if PHPUnit tests pass
  * - generates PHP documentation
  */
+
+// linting
+
+echo PHP_EOL."linting PHP Code...".PHP_EOL;
+
+exec("./vendor/bin/php-cs-fixer fix src");
+exec("./vendor/bin/php-cs-fixer fix tests");
 
 // run tests
 echo PHP_EOL."Running PHPUnit tests...".PHP_EOL;
@@ -29,5 +39,7 @@ if ($returnCode2 !== 0) {
     exit(1);
 }
 
+// adding linting and documentation changes
+exec("git add .");
 
 exit(0);

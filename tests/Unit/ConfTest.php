@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Tests\Unit;
 
@@ -6,8 +8,8 @@ use App\Conf;
 use App\Constants;
 use PHPUnit\Framework\TestCase;
 
-final class ConfTest extends TestCase {
-
+final class ConfTest extends TestCase
+{
     // resetting the PHP conf and the env after tests ran
     protected function tearDown(): void
     {
@@ -18,29 +20,32 @@ final class ConfTest extends TestCase {
         \putenv(Constants::APP_ENV."=".Constants::DEV_ENV);
     }
 
-    public function testCheckDevConf() {
+    public function testCheckDevConf()
+    {
         $this->assertTrue(Conf::checkDevConf());
     }
 
-    public function testCheckDevConfWhenProdReturnsTrue() {
+    public function testCheckDevConfWhenProdReturnsTrue()
+    {
         \putenv(Constants::APP_ENV."=".Constants::PROD_ENV);
         ini_set("display_errors", 0);
         $this->assertTrue(Conf::checkDevConf());
     }
 
-    public function testCheckDevConfWithIncorrectConfReturnsFalse() {
+    public function testCheckDevConfWithIncorrectConfReturnsFalse()
+    {
         ini_set("display_errors", 0);
         $this->assertFalse(Conf::checkDevConf());
     }
 
-    public function testCheckSharedConf() {
+    public function testCheckSharedConf()
+    {
         $this->assertTrue(Conf::checkSharedConf());
     }
 
-    public function testCheckSharedConfWithIncorrectConfReturnsFalse() {
+    public function testCheckSharedConfWithIncorrectConfReturnsFalse()
+    {
         ini_set("error_reporting", E_ERROR);
         $this->assertFalse(Conf::checkSharedConf());
     }
-
 }
-

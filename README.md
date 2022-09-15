@@ -32,7 +32,8 @@ my personal website take #999999999999, app' may be in French or in English, hen
 
 ## prerequisites
 
-- Linux
+- Linux Deb OS
+- git is installed on your machine
 - have PHP in your path
 - have Docker installed on your machine
 
@@ -76,6 +77,7 @@ on any environment/deployment, view the docs at `/docs`
 ### locally
 
 - application stack must be up with a `docker compose up`
+- PHPDocumentor's [PHAR executable](https://phpdoc.org/phpDocumentor.phar) must be present in the root of the repo
 - `composer install --ignore-platform-reqs` to execute post deps install script that will copy the pre commit hook that includes tests in the `.git` folder (and also to benefit from code intellisense in your IDE); also, if you modify a hook in the `hooks` folder, dont forget to re run a composer install so it's re copied in the `.git` folder
 - `git add . && git commit -m "initial commit"` =>
   - see the magic of a local testing pipeline happening !
