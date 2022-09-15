@@ -6,7 +6,7 @@
  * ! don't forget it to make it executable
  *
  * using a Docker running PHP container,
- * TODO - lints PHP code in
+ * - lints PHP code in
  *  - src
  *  - tests
  * - checks if PHPUnit tests pass
