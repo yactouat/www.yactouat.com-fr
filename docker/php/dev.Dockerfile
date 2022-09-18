@@ -19,6 +19,9 @@ RUN mkdir /home/wwwyactouatdotcom && \
 COPY --chown=wwwyactouatdotcom:wwwyactouatdotcom . /var/www/html
 
 # setting PHP conf
+# XDebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
 # shared PHP conf
 RUN mv /var/www/html/docker/php/shared.ini /usr/local/etc/php/conf.d/shared.ini
 # error reporting is suitable for DEV here

@@ -10,3 +10,4 @@ services:
       - /var/www/html/vendor/
     ports:
       - 80:80
+      - 9003:9003
