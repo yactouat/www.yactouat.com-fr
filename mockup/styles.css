@@ -19,7 +19,7 @@ html {
     box-sizing: border-box;
 }
 body {
-    font-family: "Baskervville", serif;
+    font-family: "Libre Baskerville", serif;
     color: var(--content-primary-color);
     background-color: var(--background-color);
 }
@@ -30,13 +30,30 @@ h2, h3, h4, h5, h6 {
     font-family: "Raleway", sans-serif;
 }
 a {
-    text-decoration: none;
     color: var(--content-primary-color);
 }
 main {
     display: grid;
     grid-template-columns: minmax(2rem, 1fr) minmax(min-content, 94rem) minmax(2rem, 1fr);
-    row-gap: 3rem;
+    row-gap: 1rem;
+}
+.highlighted {
+    color: var(--brand-secondary-color);
+    font-weight: bold;
+}
+.italic {
+    font-style: italic;
+}
+.muted {
+    color: var(--muted-color);
+}
+.body-copy {
+    /* start at grid line 2 and end at grid line 3 */
+    grid-column: 2 / 3;
+    font-size: 1.8rem;
+    letter-spacing: 0.6px;
+    column-width: 25rem;
+    text-align: justify;
 }
 
 /* heading styles */
@@ -64,7 +81,6 @@ img {
 .hero-subtitle {
     font-size: 2.4rem;
     text-align: center;
-    color: var(--brand-secondary-color);
 }
 .social-icons {
     display: grid;
@@ -78,9 +94,6 @@ img {
 .author {
     font-size: 2rem;
     font-family: "Raleway", sans-serif;
-}
-.publish-date {
-    color: var(--muted-color);
 }
 @media only screen and (max-width:550px) {
     .hero-title {
@@ -97,15 +110,7 @@ img {
 }
 
 /* first text contents styles */
-.text {
-    /* start at grid line 2 and end at grid line 3 */
-    grid-column: 2 / 3;
-    font-size: 1.8rem;
-    letter-spacing: 0.6px;
-    column-width: 25rem;
-    text-align: justify;
-}
-.first-paragraph::first-letter {
+.body-copy-intro::first-letter {
     font-size: 6rem;
     color:var(--brand-secondary-color);
     float: left;
@@ -128,13 +133,13 @@ hr {
     content: ' "';
 }
 @media only screen and (max-width:550px) {
-    .text {
+    .body-copy {
         font-size: 1.6rem;
     }
 }
 
 /* second text content styles */
-.text-with-images {
+.history-section {
     display: grid;
     grid-template-columns: 1fr 2fr;
     column-gap: 3rem;
@@ -171,7 +176,7 @@ hr {
     }
 }
 @media only screen and (max-width:600px) {
-    .text-with-images {
+    .history-section {
         grid-template-columns: 1fr;
     }
 }
