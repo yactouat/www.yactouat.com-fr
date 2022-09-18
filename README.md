@@ -10,6 +10,8 @@
     - [how to run](#how-to-run)
     - [test the app'](#test-the-app)
         - [automated](#automated)
+    - [debug the app'](#debug-the-app)
+        - [VSCode](#vscode)
         - [QA](#qa)
     - [Documentation](#documentation)
         - [PHP code](#php-code)
@@ -49,6 +51,17 @@ my personal website take #999999999999, app' may be in French or in English, hen
 
 - `docker compose up` (if application stack not already running)
 - `docker exec -t wwwyactouatdotcom-app-1 bash -c "/var/www/html/vendor/bin/phpunit /var/www/html/tests --testdox --colors"`
+
+## debug the app'
+
+### VSCode
+
+- you need to have `ms-vscode-remote.remote-containers` (and possibly `ms-vscode-remote.remote-wsl`) extensions installed
+- in a VSCode window, open the command palette with a `ctlr + p` and start a command with a `>`
+- run `Remote-Containers: Attach To Running Container`
+- select the PHP container in the list containing all the containers of the application stack
+- once VSCode is open inside the container, you can run the pre configured PHP debugger from within the UI and start to place breakpoints
+- when a request hits the app', you'll be able to debug it !
 
 ### QA
 
