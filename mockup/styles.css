@@ -5,7 +5,22 @@
     --content-primary-color: white;
     --content-tertiary-color: #00baaf;
     --muted-color: rgba(255, 255, 255, 0.5);
+    --gridItemInflate-delay: 50ms;
+    --gridItemInflate-duration: 350ms;
 }
+
+/* animations */
+@keyframes gridItemInflate {
+    from {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 
 /* general styles */
 *, ::before, ::after {
@@ -47,14 +62,6 @@ main {
 .muted {
     color: var(--muted-color);
 }
-.body-copy {
-    /* start at grid line 2 and end at grid line 3 */
-    grid-column: 2 / 3;
-    font-size: 1.8rem;
-    letter-spacing: 0.6px;
-    column-width: 25rem;
-    text-align: justify;
-}
 
 /* heading styles */
 .heading {
@@ -91,6 +98,32 @@ img {
     grid-auto-columns: 1fr;
     align-items: center;
 }
+.social-icon {
+    animation: gridItemInflate var(--gridItemInflate-duration) ease-out;
+    animation-fill-mode: backwards;
+}
+/* TODO factorize social icons animations in a Sass loop */
+.social-icon:first-of-type {
+    animation-delay: calc(1 * var(--gridItemInflate-delay));
+}
+.social-icon:nth-child(2) {
+    animation-delay: calc(2 * var(--gridItemInflate-delay));
+}
+.social-icon:nth-child(3) {
+    animation-delay: calc(3 * var(--gridItemInflate-delay));
+}
+.social-icon:nth-child(4) {
+    animation-delay: calc(4 * var(--gridItemInflate-delay));
+}
+.social-icon:nth-child(5) {
+    animation-delay: calc(5 * var(--gridItemInflate-delay));
+}
+.social-icon:nth-child(6) {
+    animation-delay: calc(6 * var(--gridItemInflate-delay));
+}
+.social-icon:nth-child(7) {
+    animation-delay: calc(7 * var(--gridItemInflate-delay));
+}
 .author {
     font-size: 2rem;
     font-family: "Raleway", sans-serif;
@@ -107,6 +140,16 @@ img {
     .hero-title {
         font-size: 4.5rem;
     }
+}
+
+/* body copy styles */
+.body-copy {
+    /* start at grid line 2 and end at grid line 3 */
+    grid-column: 2 / 3;
+    font-size: 1.8rem;
+    letter-spacing: 0.6px;
+    column-width: 25rem;
+    text-align: justify;
 }
 
 /* first text contents styles */
