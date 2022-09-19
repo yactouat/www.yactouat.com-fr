@@ -1,3 +1,12 @@
+/* variables */
+:root {
+    --background-color: rgb(0, 0, 0, 0.85);
+    --brand-secondary-color: #ff4500;
+    --content-primary-color: white;
+    --content-tertiary-color: #00baaf;
+    --muted-color: rgba(255, 255, 255, 0.5);
+}
+
 /* general styles */
 *, ::before, ::after {
     padding: 0;
@@ -10,9 +19,9 @@ html {
     box-sizing: border-box;
 }
 body {
-    font-family: "Baskervville", serif;
-    color: linen;
-    background-color: rgb(20,30,40);
+    font-family: "Libre Baskerville", serif;
+    color: var(--content-primary-color);
+    background-color: var(--background-color);
 }
 h1 {
     font-family: "Anton", sans-serif;
@@ -21,13 +30,30 @@ h2, h3, h4, h5, h6 {
     font-family: "Raleway", sans-serif;
 }
 a {
-    text-decoration: none;
-    color: linen;
+    color: var(--content-primary-color);
 }
 main {
     display: grid;
     grid-template-columns: minmax(2rem, 1fr) minmax(min-content, 94rem) minmax(2rem, 1fr);
-    row-gap: 3rem;
+    row-gap: 1rem;
+}
+.highlighted {
+    color: var(--brand-secondary-color);
+    font-weight: bold;
+}
+.italic {
+    font-style: italic;
+}
+.muted {
+    color: var(--muted-color);
+}
+.body-copy {
+    /* start at grid line 2 and end at grid line 3 */
+    grid-column: 2 / 3;
+    font-size: 1.8rem;
+    letter-spacing: 0.6px;
+    column-width: 25rem;
+    text-align: justify;
 }
 
 /* heading styles */
@@ -49,13 +75,12 @@ img {
 }
 .hero-title {
     text-align: center;
-    color: orangered;
+    color: var(--brand-secondary-color);
     font-size: 8rem;
 }
 .hero-subtitle {
     font-size: 2.4rem;
     text-align: center;
-    color: orangered;
 }
 .social-icons {
     display: grid;
@@ -69,12 +94,6 @@ img {
 .author {
     font-size: 2rem;
     font-family: "Raleway", sans-serif;
-}
-.author-name a:hover {
-    background-color: #306203;
-}
-.publish-date {
-    color: rgba(255, 255, 255, 0.5);
 }
 @media only screen and (max-width:550px) {
     .hero-title {
@@ -91,26 +110,18 @@ img {
 }
 
 /* first text contents styles */
-.text {
-    /* start at grid line 2 and end at grid line 3 */
-    grid-column: 2 / 3;
-    font-size: 1.8rem;
-    letter-spacing: 0.6px;
-    column-width: 25rem;
-    text-align: justify;
-}
-.first-paragraph::first-letter {
+.body-copy-intro::first-letter {
     font-size: 6rem;
-    color:orangered;
+    color:var(--brand-secondary-color);
     float: left;
     margin-right: 1rem;
 }
 hr {
     margin: 1.5rem 0;
-    border: 1px solid rgba(120, 120, 120, 0.6);
+    border: 1px solid var(--muted-color);
 }
 .quote {
-    color: #00beef;
+    color: var(--content-tertiary-color);
     font-size: 2.4rem;
     text-align: center;
     font-family: "Raleway", sans-serif;
@@ -122,13 +133,13 @@ hr {
     content: ' "';
 }
 @media only screen and (max-width:550px) {
-    .text {
+    .body-copy {
         font-size: 1.6rem;
     }
 }
 
 /* second text content styles */
-.text-with-images {
+.history-section {
     display: grid;
     grid-template-columns: 1fr 2fr;
     column-gap: 3rem;
@@ -142,7 +153,7 @@ hr {
     margin-bottom: 1.5rem;
 }
 .list-title, .list-subtitle {
-    color: #00beef;
+    color: var(--content-tertiary-color);
 }
 .image-wrapper {
     display: grid;
@@ -165,7 +176,7 @@ hr {
     }
 }
 @media only screen and (max-width:600px) {
-    .text-with-images {
+    .history-section {
         grid-template-columns: 1fr;
     }
 }

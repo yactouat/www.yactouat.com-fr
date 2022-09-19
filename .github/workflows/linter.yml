@@ -57,3 +57,4 @@ jobs:
           # in the Checks section of a pull request
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_MARKDOWN: false
+          VALIDATE_NATURAL_LANGUAGE: false
