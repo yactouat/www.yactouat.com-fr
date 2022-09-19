@@ -56,5 +56,6 @@ jobs:
           # allows for the GitHub Super-Linter to mark the status of each individual linter run 
           # in the Checks section of a pull request
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_CSS: false
           VALIDATE_MARKDOWN: false
           VALIDATE_NATURAL_LANGUAGE: false
