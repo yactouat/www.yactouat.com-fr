@@ -100,7 +100,8 @@ on any environment/deployment, view the docs at `/docs`
 - `composer install --ignore-platform-reqs` to execute post deps install script that will copy the pre commit hook that includes tests in the `.git` folder (and also to benefit from code intellisense in your IDE); also, if you modify a hook in the `hooks` folder, dont forget to re run a composer install so it's re copied in the `.git` folder
 - `git add . && git commit -m "initial commit"` =>
   - see the magic of a local testing pipeline happening !
-  - see the PHP documentation generated in `./public/docs`
+  - see the PHP documentation generated in `./public/docs/php`
+  - your PHP code will also be linted
 
 ### GitHub Actions
 
