@@ -23,5 +23,8 @@
         "post-install-cmd": [
             "cp -f ./hooks/pre-commit ./.git/hooks/pre-commit && chmod u+x ./.git/hooks/*"
         ]
+    },
+    "require": {
+        "twig/twig": "^3.4"
     }
 }

@@ -6,6 +6,16 @@ Search.appendIndex(
             "summary": "this\u0020class\u0020is\u0020responsible\u0020for\u0020managing\u0020configuration\u0020for\u0020all\u0020and\u0020each\u0020envs",
             "url": "classes/App-Conf.html"
         },                {
+            "fqsen": "\\App\\Conf\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "initialization\u0020logic\u0020of\u0020the\u0020configuration",
+            "url": "classes/App-Conf.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Conf\u003A\u003A_initTwig\u0028\u0029",
+            "name": "_initTwig",
+            "summary": "initialization\u0020logic\u0020of\u0020Twig",
+            "url": "classes/App-Conf.html#method__initTwig"
+        },                {
             "fqsen": "\\App\\Conf\u003A\u003AcheckDevConf\u0028\u0029",
             "name": "checkDevConf",
             "summary": "checks\u0020if\u0020dev\u0020PHP\u0020conf.\u0020corresponds\u0020to\u0020what\u0027s\u0020expected",
@@ -16,9 +26,34 @@ Search.appendIndex(
             "summary": "checks\u0020if\u0020shared\u0020PHP\u0020conf.\u0020corresponds\u0020to\u0020what\u0027s\u0020expected",
             "url": "classes/App-Conf.html#method_checkSharedConf"
         },                {
+            "fqsen": "\\App\\Conf\u003A\u003AisDevEnv\u0028\u0029",
+            "name": "isDevEnv",
+            "summary": "checks\u0020if\u0020app\u0027\u0020runs\u0020in\u0020dev\u0020environment",
+            "url": "classes/App-Conf.html#method_isDevEnv"
+        },                {
+            "fqsen": "\\App\\Conf\u003A\u003AisProdEnv\u0028\u0029",
+            "name": "isProdEnv",
+            "summary": "checks\u0020if\u0020app\u0027\u0020runs\u0020in\u0020prod\u0020environment",
+            "url": "classes/App-Conf.html#method_isProdEnv"
+        },                {
+            "fqsen": "\\App\\Conf\u003A\u003AgetRootDir\u0028\u0029",
+            "name": "getRootDir",
+            "summary": "gets\u0020the\u0020root\u0020directory\u0020of\u0020the\u0020application",
+            "url": "classes/App-Conf.html#method_getRootDir"
+        },                {
+            "fqsen": "\\App\\Conf\u003A\u003A\u0024twig",
+            "name": "twig",
+            "summary": "",
+            "url": "classes/App-Conf.html#property_twig"
+        },                {
+            "fqsen": "\\App\\Conf\u003A\u003A\u0024_rootDir",
+            "name": "_rootDir",
+            "summary": "",
+            "url": "classes/App-Conf.html#property__rootDir"
+        },                {
             "fqsen": "\\App\\Constants",
             "name": "Constants",
-            "summary": "",
+            "summary": "this\u0020class\u0020contains\u0020the\u0020list\u0020of\u0020all\u0020the\u0020constants\u0020used\u0020throughout\u0020the\u0020app\u0027",
             "url": "classes/App-Constants.html"
         },                {
             "fqsen": "\\App\\Constants\u003A\u003AAPP_ENV",
@@ -35,6 +70,26 @@ Search.appendIndex(
             "name": "PROD_ENV",
             "summary": "",
             "url": "classes/App-Constants.html#constant_PROD_ENV"
+        },                {
+            "fqsen": "\\App\\EntryPoint",
+            "name": "EntryPoint",
+            "summary": "this\u0020class\u0020is\u0020the\u0020entry\u0020point\u0020of\u0020our\u0020application",
+            "url": "classes/App-EntryPoint.html"
+        },                {
+            "fqsen": "\\App\\EntryPoint\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "creates\u0020a\u0020new\u0020instance\u0020of\u0020the\u0020app\u0027",
+            "url": "classes/App-EntryPoint.html#method___construct"
+        },                {
+            "fqsen": "\\App\\EntryPoint\u003A\u003Arespond\u0028\u0029",
+            "name": "respond",
+            "summary": "responds\u0020to\u0020clients\u0020requests",
+            "url": "classes/App-EntryPoint.html#method_respond"
+        },                {
+            "fqsen": "\\App\\EntryPoint\u003A\u003A\u0024_conf",
+            "name": "_conf",
+            "summary": "",
+            "url": "classes/App-EntryPoint.html#property__conf"
         },                {
             "fqsen": "\\",
             "name": "\\",

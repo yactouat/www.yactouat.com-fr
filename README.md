@@ -19,6 +19,9 @@
             - [view the docs](#view-the-docs)
     - [CI/CD](#cicd)
         - [locally](#locally)
+        - [GitHub Actions](#github-actions)
+            - [on pull request to main branch](#on-pull-request-to-main-branch)
+            - [on push](#on-push)
     - [Deployment](#deployment)
         - [first deployment steps](#first-deployment-steps)
         - [manual deployment flow: from Docker image to Cloud Run](#manual-deployment-flow-from-docker-image-to-cloud-run)
@@ -66,7 +69,8 @@ my personal website take #999999999999, app' may be in French or in English, hen
 ### QA
 
 - no conf error message on going to `/` + 200 status code
-- go to `/docs` and check documentation for any class + 200 status codes
+- go to `/docs` and check documentation for any class + 200 status code
+- going to `/` renders magazine landing page correctly
 
 ## Documentation
 
@@ -97,6 +101,18 @@ on any environment/deployment, view the docs at `/docs`
 - `git add . && git commit -m "initial commit"` =>
   - see the magic of a local testing pipeline happening !
   - see the PHP documentation generated in `./public/docs`
+
+### GitHub Actions
+
+There are GitHub actions workflows implemented in the `.github/workflows` folder.
+
+#### on pull request to main branch
+
+- GitHub Action [super linting](https://github.com/marketplace/actions/super-linter)
+
+#### on push
+
+- GitHub Action [super linting](https://github.com/marketplace/actions/super-linter)
 
 ## Deployment
 

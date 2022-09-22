@@ -1,16 +1,14 @@
 <?php
 
-// setting root dir
+// defining root dir
 $rootDir = dirname(__DIR__);
 
 // loading deps
 require_once $rootDir."/vendor/autoload.php";
-use App\Conf;
-use App\Constants;
+use App\EntryPoint;
 
-if (!Conf::checkDevConf() || !Conf::checkSharedConf()) {
-    http_response_code(500);
-    die("conf KO");
-}
+// instanciating app'
+$app = new EntryPoint($rootDir);
 
-echo "it works in env ".getenv(Constants::APP_ENV, true)."\n";
+// send response to request
+$app->respond();
