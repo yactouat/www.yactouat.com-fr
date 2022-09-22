@@ -47,7 +47,7 @@ h2, h3, h4, h5, h6 {
 a {
     color: var(--content-primary-color);
 }
-main {
+main, footer {
     display: grid;
     grid-template-columns: minmax(2rem, 1fr) minmax(min-content, 94rem) minmax(2rem, 1fr);
     row-gap: 1rem;
@@ -222,6 +222,17 @@ hr {
     .history-section {
         grid-template-columns: 1fr;
     }
+}
+
+/* footer styles */
+footer {
+    padding: 2rem 0;
+    font-size: 2rem;
+}
+#copyright-section {
+    /* start at grid line 2 and end at grid line 3 */
+    grid-column: 2 / 3;
+    text-align: center;
 }
 
 /* general media queries */
