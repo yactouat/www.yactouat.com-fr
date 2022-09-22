@@ -13,16 +13,35 @@ use Twig\Loader\FilesystemLoader as TwigLoader;
  */
 final class Conf
 {
+    /** @var Environment the Twig instance that will be used in the app' */
     public Environment $twig;
 
+    /** @var string the root directory of the app' */
     private string $_rootDir;
 
+    /**
+     * initialization logic of the configuration
+     *
+     * loads:
+     * - twig, a `views` directory must exist at the selected root dir
+     *
+     * @param string $rootDir the root directory of the project
+     *
+     * @return void
+     */
     public function __construct(string $rootDir)
     {
         $this->_rootDir = $rootDir;
         $this->_initTwig();
     }
 
+    /**
+     * initialization logic of Twig
+     *
+     * adds debug extension if dev to dump values
+     *
+     * @return void
+     */
     private function _initTwig(): void
     {
         $loader = new TwigLoader($this->_rootDir . '/views');
@@ -63,16 +82,35 @@ final class Conf
         return ini_get("error_reporting") == E_ALL && ini_get("log_errors") == 1;
     }
 
+    /**
+     * checks if app' runs in dev environment
+     *
+     * @return bool
+     */
     public static function isDevEnv(): bool
     {
         return getenv(Constants::APP_ENV, true) === Constants::DEV_ENV;
     }
 
+    /**
+     * checks if app' runs in prod environment
+     *
+     * @return bool
+     */
     public static function isProdEnv(): bool
     {
         return getenv(Constants::APP_ENV, true) === Constants::PROD_ENV;
     }
 
+    /**
+     * gets the root directory of the application
+     *
+     * this is used to locate various folders:
+     * - vendor
+     * - views
+     *
+     * @return string
+     */
     public function getRootDir(): string
     {
         return $this->_rootDir;

@@ -67,6 +67,7 @@ my personal website take #999999999999, app' may be in French or in English, hen
 
 - no conf error message on going to `/` + 200 status code
 - go to `/docs` and check documentation for any class + 200 status codes
+- going to `/` renders magazine landing page correctly
 
 ## Documentation
 
