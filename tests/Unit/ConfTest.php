@@ -7,6 +7,7 @@ namespace Tests\Unit;
 use App\Conf;
 use App\Constants;
 use PHPUnit\Framework\TestCase;
+use Twig\Environment;
 
 final class ConfTest extends TestCase
 {
@@ -47,5 +48,19 @@ final class ConfTest extends TestCase
     {
         ini_set("error_reporting", E_ERROR);
         $this->assertFalse(Conf::checkSharedConf());
+    }
+
+    public function testConstructSetsRootDir()
+    {
+        $expected = getcwd();
+        $conf = new Conf($expected);
+        $actual = $conf->getRootDir();
+        $this->assertSame($expected, $actual);
+    }
+
+    public function testConstructLoadsTwigEnv()
+    {
+        $conf = new Conf(getcwd());
+        $this->assertInstanceOf(Environment::class, $conf->twig);
     }
 }

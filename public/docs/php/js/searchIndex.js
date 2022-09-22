@@ -6,6 +6,16 @@ Search.appendIndex(
             "summary": "this\u0020class\u0020is\u0020responsible\u0020for\u0020managing\u0020configuration\u0020for\u0020all\u0020and\u0020each\u0020envs",
             "url": "classes/App-Conf.html"
         },                {
+            "fqsen": "\\App\\Conf\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Conf.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Conf\u003A\u003A_initTwig\u0028\u0029",
+            "name": "_initTwig",
+            "summary": "",
+            "url": "classes/App-Conf.html#method__initTwig"
+        },                {
             "fqsen": "\\App\\Conf\u003A\u003AcheckDevConf\u0028\u0029",
             "name": "checkDevConf",
             "summary": "checks\u0020if\u0020dev\u0020PHP\u0020conf.\u0020corresponds\u0020to\u0020what\u0027s\u0020expected",
@@ -15,6 +25,31 @@ Search.appendIndex(
             "name": "checkSharedConf",
             "summary": "checks\u0020if\u0020shared\u0020PHP\u0020conf.\u0020corresponds\u0020to\u0020what\u0027s\u0020expected",
             "url": "classes/App-Conf.html#method_checkSharedConf"
+        },                {
+            "fqsen": "\\App\\Conf\u003A\u003AisDevEnv\u0028\u0029",
+            "name": "isDevEnv",
+            "summary": "",
+            "url": "classes/App-Conf.html#method_isDevEnv"
+        },                {
+            "fqsen": "\\App\\Conf\u003A\u003AisProdEnv\u0028\u0029",
+            "name": "isProdEnv",
+            "summary": "",
+            "url": "classes/App-Conf.html#method_isProdEnv"
+        },                {
+            "fqsen": "\\App\\Conf\u003A\u003AgetRootDir\u0028\u0029",
+            "name": "getRootDir",
+            "summary": "",
+            "url": "classes/App-Conf.html#method_getRootDir"
+        },                {
+            "fqsen": "\\App\\Conf\u003A\u003A\u0024twig",
+            "name": "twig",
+            "summary": "",
+            "url": "classes/App-Conf.html#property_twig"
+        },                {
+            "fqsen": "\\App\\Conf\u003A\u003A\u0024_rootDir",
+            "name": "_rootDir",
+            "summary": "",
+            "url": "classes/App-Conf.html#property__rootDir"
         },                {
             "fqsen": "\\App\\Constants",
             "name": "Constants",
@@ -35,6 +70,26 @@ Search.appendIndex(
             "name": "PROD_ENV",
             "summary": "",
             "url": "classes/App-Constants.html#constant_PROD_ENV"
+        },                {
+            "fqsen": "\\App\\EntryPoint",
+            "name": "EntryPoint",
+            "summary": "",
+            "url": "classes/App-EntryPoint.html"
+        },                {
+            "fqsen": "\\App\\EntryPoint\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-EntryPoint.html#method___construct"
+        },                {
+            "fqsen": "\\App\\EntryPoint\u003A\u003Arespond\u0028\u0029",
+            "name": "respond",
+            "summary": "",
+            "url": "classes/App-EntryPoint.html#method_respond"
+        },                {
+            "fqsen": "\\App\\EntryPoint\u003A\u003A\u0024_conf",
+            "name": "_conf",
+            "summary": "",
+            "url": "classes/App-EntryPoint.html#property__conf"
         },                {
             "fqsen": "\\",
             "name": "\\",
