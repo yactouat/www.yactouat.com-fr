@@ -8,6 +8,7 @@
     --gridItemInflate-duration: 350ms;
     --muted-color: rgba(255, 255, 255, 0.5);
     --spacing: 2rem;
+    --xsmall-spacing: 0.3rem;
 }
 
 /* animations */
@@ -230,12 +231,16 @@ hr {
 footer {
     font-size: 2rem;
 }
-#copyright-section {
+#footer-legal-section {
     /* start at grid line 2 and end at grid line 3 */
     grid-column: 2 / 3;
     text-align: center;
     background-color: var(--muted-color);
     padding: var(--spacing) 0;
+}
+#footer-legal-section p:not(:nth-child(1)) {
+    font-size: x-small;
+    padding: var(--xsmall-spacing) 0;
 }
 
 /* general media queries */
