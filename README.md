@@ -5,31 +5,31 @@
 <!-- TOC -->
 
 - [www.yactouat.com-fr](#wwwyactouatcom-fr)
-    - [what is this ?](#what-is-this-)
-    - [prerequisites](#prerequisites)
-    - [how to run](#how-to-run)
-    - [test the app'](#test-the-app)
-        - [automated](#automated)
-    - [debug the app'](#debug-the-app)
-        - [VSCode](#vscode)
-        - [QA](#qa)
-    - [Documentation](#documentation)
-        - [PHP code](#php-code)
-            - [generate the docs](#generate-the-docs)
-            - [view the docs](#view-the-docs)
-    - [CI/CD](#cicd)
-        - [locally](#locally)
-        - [CI: GitHub Actions](#ci-github-actions)
-            - [on pull request to main branch](#on-pull-request-to-main-branch)
-            - [on push](#on-push)
-    - [CD: Deployment on Google Cloud Run](#cd-deployment-on-google-cloud-run)
-        - [first deployment steps](#first-deployment-steps)
-        - [manual deployment flow: from Docker image to Cloud Run](#manual-deployment-flow-from-docker-image-to-cloud-run)
-            - [build and push the backend API image to Google Cloud Artifact Registry](#build-and-push-the-backend-api-image-to-google-cloud-artifact-registry)
-                - [for PHP](#for-php)
-            - [deploy the image on Cloud Run](#deploy-the-image-on-cloud-run)
-                - [a live deployment out of the box](#a-live-deployment-out-of-the-box)
-        - [automatic deployment](#automatic-deployment)
+  - [what is this ?](#what-is-this-)
+  - [prerequisites](#prerequisites)
+  - [how to run](#how-to-run)
+  - [test the app'](#test-the-app)
+    - [automated](#automated)
+  - [debug the app'](#debug-the-app)
+    - [VSCode](#vscode)
+    - [QA](#qa)
+  - [Documentation](#documentation)
+    - [PHP code](#php-code)
+      - [generate the docs](#generate-the-docs)
+      - [view the docs](#view-the-docs)
+  - [CI/CD](#cicd)
+    - [locally](#locally)
+    - [CI: GitHub Actions](#ci-github-actions)
+      - [on pull request to main branch](#on-pull-request-to-main-branch)
+      - [on push](#on-push)
+  - [CD: Deployment on Google Cloud Run](#cd-deployment-on-google-cloud-run)
+    - [first deployment steps](#first-deployment-steps)
+    - [manual deployment flow: from Docker image to Cloud Run](#manual-deployment-flow-from-docker-image-to-cloud-run)
+      - [build and push the backend API image to Google Cloud Artifact Registry](#build-and-push-the-backend-api-image-to-google-cloud-artifact-registry)
+        - [for PHP](#for-php)
+      - [deploy the image on Cloud Run](#deploy-the-image-on-cloud-run)
+        - [a live deployment out of the box](#a-live-deployment-out-of-the-box)
+    - [automatic deployment](#automatic-deployment)
 
 <!-- /TOC -->
 
@@ -39,21 +39,31 @@ my personal website take #999999999999, app' may be in French or in English, hen
 
 ## prerequisites
 
-- Ubuntu or other Linux Deb OS
-- git is installed on your machine
-- have PHP in your path
+- Ubuntu or other Linux Deb OS (WSL is fine as well)
+- [have PHP installed and in your path](https://tecadmin.net/how-to-install-php-on-ubuntu-22-04/)
+- have `unzip` installed => `sudo apt install unzip`
+- have `zip xml mbstring` extensions installed => `sudo apt -y install php-zip php-xml php8.1-mbstring`
+- [have Composer installed and in your path](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos)
 - have Docker installed on your machine
 
 ## how to run
 
-`docker compose up`
+- `docker compose up`
+- go to <http://localhost>
 
-## test the app'
+## QA and tests
 
-### automated
+### automated tests
 
 - `docker compose up` (if application stack not already running)
-- `docker exec -t wwwyactouatdotcom-app-1 bash -c "/var/www/html/vendor/bin/phpunit /var/www/html/tests --testdox --colors"`
+- `docker exec -t wwwyactouatcom-fr-app-1 bash -c "/var/www/html/vendor/bin/phpunit /var/www/html/tests --testdox --colors"`
+
+### QA
+
+- no conf error message on going to `/` + 200 status code
+- go to `/docs` and check documentation for any class + 200 status code
+- going to `/` renders magazine landing page correctly
+  - all assets are loaded
 
 ## debug the app'
 
@@ -66,42 +76,30 @@ my personal website take #999999999999, app' may be in French or in English, hen
 - once VSCode is open inside the container, you can run the pre configured PHP debugger from within the UI and start to place breakpoints
 - when a request hits the app', you'll be able to debug it !
 
-### QA
-
-- no conf error message on going to `/` + 200 status code
-- go to `/docs` and check documentation for any class + 200 status code
-- going to `/` renders magazine landing page correctly
-
 ## Documentation
 
 ### PHP code
 
-#### generate the docs
-
+- on any environment/deployment, view the docs at `/docs`
 - we use [phpDocumentor](https://www.phpdoc.org/) and it's [PHAR executable](https://phpdoc.org/phpDocumentor.phar)
-- make sure you have downloaded the PHAR provided in the link above
-- to generate the documentation, just run => `php phpDocumentor.phar`
+- to generate the documentation, just run => `php phpDocumentor.phar` (make sure you have downloaded the PHAR provided in the link above if you're doing this manually)
 - to get a feel at how to write PHP doc blocks, check out =>
   - <https://docs.phpdoc.org/3.0/guide/getting-started/what-is-a-docblock.html>
   - <https://docs.phpdoc.org/3.0/guide/guides/docblocks.html>
   - <https://docs.phpdoc.org/3.0/guide/guides/types.html>
 - the documentation configuration is described in `phpdoc.dist.xml`
 
-#### view the docs
-
-on any environment/deployment, view the docs at `/docs`
-
 ## CI/CD
 
 ### CI: locally
 
 - application stack must be up with a `docker compose up`
-- PHPDocumentor's [PHAR executable](https://phpdoc.org/phpDocumentor.phar) must be present in the root of the repo
-- `composer install --ignore-platform-reqs` to execute post deps install script that will copy the pre commit hook that includes tests in the `.git` folder (and also to benefit from code intellisense in your IDE); also, if you modify a hook in the `hooks` folder, dont forget to re run a composer install so it's re copied in the `.git` folder
+- `composer install --ignore-platform-reqs` to execute post deps install script that will copy the pre commit hook that includes tests in the `.git` folder (and also to benefit from code intellisense in your IDE); also, if you modify a hook in the `hooks` folder, dont forget to re run a composer install so the hook is updated
 - `git add . && git commit -m "initial commit"` =>
+  - see the linting happening
   - see the magic of a local testing pipeline happening !
   - see the PHP documentation generated in `./public/docs/php`
-  - your PHP code will also be linted
+  - see whatever changes made by these operations get auto committed
 
 ### CI: GitHub Actions
 
