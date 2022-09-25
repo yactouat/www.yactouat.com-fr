@@ -26,6 +26,7 @@
             - [deploy the image on Cloud Run](#deploy-the-image-on-cloud-run)
                 - [a live deployment out of the box](#a-live-deployment-out-of-the-box)
         - [automatic deployment](#automatic-deployment)
+        - [mapping a domain to your Cloud Run service](#mapping-a-domain-to-your-cloud-run-service)
 
 <!-- /TOC -->
 
@@ -42,6 +43,7 @@ my personal website take #999999999999, app' may be in French or in English, hen
 - [have Composer installed and in your path](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos)
 - have Docker installed on your machine
 - have the `gcloud` CLI installed on your machine, a GCP project, and a Docker repository set up
+- having bought a domain name, preferably on Google Domains
 
 ### `gcloud` CLI and GCP project setup
 
@@ -172,3 +174,15 @@ I thought I was about to read endless docs and writing countless YAML files in t
 - in the case of this repo, it will be the `main` branch
 - however, the deployed image wont be pushed to the Artifact Registry, as it was the case with manual deploys; but instead your Dockerfile is built and directly pushed to the Container Registry instead... still trying to figure out how to sync both registries 🤔
 - that means if you manually deploy a new container image, it will be overridden the next time the Cloud Build trigger runs
+
+### mapping a domain to your Cloud Run service
+
+Mapping a domain is also pretty straightforward:
+
+- go to your list of Cloud Runs services
+- right below the main UI header you'll find a `MANAGE CUSTOM DOMAINS` button
+- on click, you arrive on the domain mappings section
+- just click the `ADD MAPPING` domain and select the correct service and domain (don't use a subdomain if it's your first mapping)
+- if domain mappings are not available for your region (that's the case for a lot of regions in Europe), check out <https://cloud.google.com/run/docs/mapping-custom-domains#limitations>
+- follow instructions in <https://cloud.google.com/run/docs/mapping-custom-domains?_ga=2.169427362.-284760377.1664096993#dns_update>
+- deploying to domain preferred method is the manual one
