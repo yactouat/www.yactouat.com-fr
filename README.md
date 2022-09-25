@@ -19,16 +19,16 @@
             - [view the docs](#view-the-docs)
     - [CI/CD](#cicd)
         - [locally](#locally)
-        - [GitHub Actions](#github-actions)
+        - [CI: GitHub Actions](#ci-github-actions)
             - [on pull request to main branch](#on-pull-request-to-main-branch)
             - [on push](#on-push)
-    - [Deployment](#deployment)
+    - [CD: Deployment on Google Cloud Run](#cd-deployment-on-google-cloud-run)
         - [first deployment steps](#first-deployment-steps)
         - [manual deployment flow: from Docker image to Cloud Run](#manual-deployment-flow-from-docker-image-to-cloud-run)
             - [build and push the backend API image to Google Cloud Artifact Registry](#build-and-push-the-backend-api-image-to-google-cloud-artifact-registry)
                 - [for PHP](#for-php)
             - [deploy the image on Cloud Run](#deploy-the-image-on-cloud-run)
-                - [a live staging env out of the box](#a-live-staging-env-out-of-the-box)
+                - [a live deployment out of the box](#a-live-deployment-out-of-the-box)
         - [automatic deployment](#automatic-deployment)
 
 <!-- /TOC -->
@@ -39,7 +39,7 @@ my personal website take #999999999999, app' may be in French or in English, hen
 
 ## prerequisites
 
-- Linux Deb OS
+- Ubuntu or other Linux Deb OS
 - git is installed on your machine
 - have PHP in your path
 - have Docker installed on your machine
@@ -93,7 +93,7 @@ on any environment/deployment, view the docs at `/docs`
 
 ## CI/CD
 
-### locally
+### CI: locally
 
 - application stack must be up with a `docker compose up`
 - PHPDocumentor's [PHAR executable](https://phpdoc.org/phpDocumentor.phar) must be present in the root of the repo
@@ -103,9 +103,9 @@ on any environment/deployment, view the docs at `/docs`
   - see the PHP documentation generated in `./public/docs/php`
   - your PHP code will also be linted
 
-### GitHub Actions
+### CI: GitHub Actions
 
-There are GitHub actions workflows implemented in the `.github/workflows` folder.
+There are GitHub actions workflows implemented in the `.github/workflows` folder for the CI part of the pipeline.
 
 #### on pull request to main branch
 
@@ -115,12 +115,13 @@ There are GitHub actions workflows implemented in the `.github/workflows` folder
 
 - GitHub Action [super linting](https://github.com/marketplace/actions/super-linter)
 
-## Deployment
+## CD: Deployment on Google Cloud Run
 
-we use GCP Cloud Run to deploy this app'
+We use GCP Cloud Run for the CD part of the pipeline.
 
 ### first deployment steps
 
+- `sudo apt update && sudo apt upgrade`
 - install the `gcloud` CLI on your machine or run a `gcloud components update` to update your `gcloud` tools
 - have a GCP project ready and make sure billing is enabled for it
 - GCP APIs that must be enabled in your project (you can do this from your GCP browser console) =>
@@ -152,11 +153,13 @@ manual deploys are useful during the development process, if you want to see the
 #### deploy the image on Cloud Run
 
 - to deploy from source, replacing the placeholders (without the `{}`, to replace with the data of your Google Cloud project) => `gcloud run deploy {serviceName-staging|prod} --image={gCloudRegion}-docker.pkg.dev/{projectId}/{nameOfTheArtifactRegistryRepo}/{nameOfYourContainer}:{tag} --port={portOfYourService}`
+  - for instance, staging env Cloud Run service name is `wwwyactouatdotcom-staging`
+  - prod env Cloud Run service name for FR version is `wwwyactouatdotfr-prod`
 - if you have permissions issues because you are running this for the first time, just wait a few minutes and retry later
 - when prompted, allow for unauthenticated invocations if it's a public API
 - when app' deployed, the wizard should reveal the service URL that you can visit in your browser
 
-##### a live staging env out of the box
+##### a live deployment out of the box
 
 when you deployed your Cloud Run instance, every revision that will make on it will have the same TLS protected URL out of the box ! I consider this URL to be a safe place to test stuff in real world conditions; for instance, you could deploy a different service for each locale so you can try internationalization without even having to point any domain to the real thing ;) add build triggers on top of that and you'll be able to do fairly complex stuff without the headaches ! this is why I like Google Cloud Platform so much :)
 
