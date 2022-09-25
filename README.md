@@ -5,31 +5,27 @@
 <!-- TOC -->
 
 - [www.yactouat.com-fr](#wwwyactouatcom-fr)
-  - [what is this ?](#what-is-this-)
-  - [prerequisites](#prerequisites)
-  - [how to run](#how-to-run)
-  - [test the app'](#test-the-app)
-    - [automated](#automated)
-  - [debug the app'](#debug-the-app)
-    - [VSCode](#vscode)
-    - [QA](#qa)
-  - [Documentation](#documentation)
-    - [PHP code](#php-code)
-      - [generate the docs](#generate-the-docs)
-      - [view the docs](#view-the-docs)
-  - [CI/CD](#cicd)
-    - [locally](#locally)
-    - [CI: GitHub Actions](#ci-github-actions)
-      - [on pull request to main branch](#on-pull-request-to-main-branch)
-      - [on push](#on-push)
-  - [CD: Deployment on Google Cloud Run](#cd-deployment-on-google-cloud-run)
-    - [first deployment steps](#first-deployment-steps)
-    - [manual deployment flow: from Docker image to Cloud Run](#manual-deployment-flow-from-docker-image-to-cloud-run)
-      - [build and push the backend API image to Google Cloud Artifact Registry](#build-and-push-the-backend-api-image-to-google-cloud-artifact-registry)
-        - [for PHP](#for-php)
-      - [deploy the image on Cloud Run](#deploy-the-image-on-cloud-run)
-        - [a live deployment out of the box](#a-live-deployment-out-of-the-box)
-    - [automatic deployment](#automatic-deployment)
+    - [what is this ?](#what-is-this-)
+    - [prerequisites](#prerequisites)
+        - [gcloud CLI and GCP project setup](#gcloud-cli-and-gcp-project-setup)
+    - [how to run](#how-to-run)
+    - [tests and QA](#tests-and-qa)
+        - [automated tests](#automated-tests)
+        - [QA manual tests](#qa-manual-tests)
+    - [debug the app'](#debug-the-app)
+        - [VSCode](#vscode)
+    - [Documentation](#documentation)
+        - [PHP code](#php-code)
+    - [CI/CD](#cicd)
+        - [CI: locally](#ci-locally)
+        - [CI: GitHub Actions](#ci-github-actions)
+    - [CD: Deployment on Google Cloud Run](#cd-deployment-on-google-cloud-run)
+        - [manual deployment flow: from Docker image to Cloud Run](#manual-deployment-flow-from-docker-image-to-cloud-run)
+            - [build and push the backend API image to Google Cloud Artifact Registry](#build-and-push-the-backend-api-image-to-google-cloud-artifact-registry)
+                - [PHP specifics](#php-specifics)
+            - [deploy the image on Cloud Run](#deploy-the-image-on-cloud-run)
+                - [a live deployment out of the box](#a-live-deployment-out-of-the-box)
+        - [automatic deployment](#automatic-deployment)
 
 <!-- /TOC -->
 
@@ -45,25 +41,46 @@ my personal website take #999999999999, app' may be in French or in English, hen
 - have `zip xml mbstring` extensions installed => `sudo apt -y install php-zip php-xml php8.1-mbstring`
 - [have Composer installed and in your path](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos)
 - have Docker installed on your machine
+- have the `gcloud` CLI installed on your machine, a GCP project, and a Docker repository set up
+
+### `gcloud` CLI and GCP project setup
+
+- `sudo apt update && sudo apt upgrade`
+- [install](https://cloud.google.com/sdk/docs/install#deb) the `gcloud` CLI on your machine or run a `gcloud components update` to update your `gcloud` tools
+- have a GCP project ready and make sure billing is enabled for it
+- GCP APIs that must be enabled in your project (you can do this from your GCP browser console) =>
+  - `Artifact Registry API`
+  - `Cloud Build API`
+  - `Compute Engine API`
+  - `Container Analysis API`
+- you may need to [connect your GCP identity/repo to GitHub](https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github)
+- initialize `gcloud` CLI => `gcloud init`
+- then set the project ID =>  `gcloud config set project PROJECT_ID`
+- set your default region, replacing the placeholders (without the `{}`, to replace with the relevant Google Cloud region, for instance `europe-west6`) => `gcloud config set run/region {gCloudRegion}`
+- authenticate your local Docker install to Artifact Registry, replacing the placeholders (without the `{}`, to replace with the relevant Google Cloud region) => `gcloud auth configure-docker {gCloudRegion}-docker.pkg.dev`
+- create a Docker repository in the artifact registry
 
 ## how to run
 
 - `docker compose up`
 - go to <http://localhost>
 
-## QA and tests
+## tests and QA
 
 ### automated tests
 
 - `docker compose up` (if application stack not already running)
-- `docker exec -t wwwyactouatcom-fr-app-1 bash -c "/var/www/html/vendor/bin/phpunit /var/www/html/tests --testdox --colors"`
+- PHP tests => `docker exec -t wwwyactouatcom-fr-app-1 bash -c "/var/www/html/vendor/bin/phpunit /var/www/html/tests --testdox --colors"`
 
-### QA
+### QA manual tests
 
-- no conf error message on going to `/` + 200 status code
-- go to `/docs` and check documentation for any class + 200 status code
-- going to `/` renders magazine landing page correctly
+- `/` renders magazine landing page correctly
+  - 200 status code
   - all assets are loaded
+  - page displays nice on desktop with no apparent display bugs
+- `/docs`
+  - 200 status code
+  - check documentation for at least 2 classes
 
 ## debug the app'
 
@@ -103,36 +120,14 @@ my personal website take #999999999999, app' may be in French or in English, hen
 
 ### CI: GitHub Actions
 
-There are GitHub actions workflows implemented in the `.github/workflows` folder for the CI part of the pipeline.
-
-#### on pull request to main branch
+There are GitHub actions workflows implemented in the `.github/workflows` folder for the CI part of the pipeline, these are:
 
 - GitHub Action [super linting](https://github.com/marketplace/actions/super-linter)
-
-#### on push
-
-- GitHub Action [super linting](https://github.com/marketplace/actions/super-linter)
+  - runs on `pull_request` to `main`
 
 ## CD: Deployment on Google Cloud Run
 
 We use GCP Cloud Run for the CD part of the pipeline.
-
-### first deployment steps
-
-- `sudo apt update && sudo apt upgrade`
-- install the `gcloud` CLI on your machine or run a `gcloud components update` to update your `gcloud` tools
-- have a GCP project ready and make sure billing is enabled for it
-- GCP APIs that must be enabled in your project (you can do this from your GCP browser console) =>
-  - `Artifact Registry API`
-  - `Cloud Build API`
-  - `Compute Engine API`
-  - `Container Analysis API`
-- you may need to [connect your GCP identity/repo to GitHub](https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github)
-- initialize `gcloud` CLI => `gcloud init`
-- then set the project ID =>  `gcloud config set project PROJECT_ID`
-- set your default region, replacing the placeholders (without the `{}`, to replace with the relevant Google Cloud region, for instance `europe-west6`) => `gcloud config set run/region {gCloudRegion}`
-- authenticate your local Docker install to Artifact Registry, replacing the placeholders (without the `{}`, to replace with the relevant Google Cloud region) => `gcloud auth configure-docker {gCloudRegion}-docker.pkg.dev`
-- create a Docker repository in the artifact registry
 
 ### manual deployment flow: from Docker image to Cloud Run
 
@@ -143,7 +138,7 @@ manual deploys are useful during the development process, if you want to see the
 - build and tag the relevant Docker image locally, replacing the placeholders (without the `{}`, to replace with the data of your Google Cloud project) => `docker build -t {gCloudRegion}-docker.pkg.dev/{projectId}/{nameOfTheArtifactRegistryRepo}/{nameOfYourContainer}:{tag} -f ./docker/{languageFolder}/prod.Dockerfile .`
 - push the images to the Artifact Registry, replacing the placeholders (without the `{}`, to replace with the data of your Google Cloud project) => `docker push {gCloudRegion}-docker.pkg.dev/{projectId}/{nameOfTheArtifactRegistryRepo}/{nameOfYourContainer}:{tag}`
 
-##### for PHP
+##### PHP specifics
 
 - make sure the `php.ci.Dockerfile` is in sync with `./docker/php/prod.Dockerfile`
 - make sure the `composer.json.prod` is in sync with `composer.json` (minus unwanted scripts and dev dependencies)
@@ -159,7 +154,9 @@ manual deploys are useful during the development process, if you want to see the
 
 ##### a live deployment out of the box
 
-when you deployed your Cloud Run instance, every revision that will make on it will have the same TLS protected URL out of the box ! I consider this URL to be a safe place to test stuff in real world conditions; for instance, you could deploy a different service for each locale so you can try internationalization without even having to point any domain to the real thing ;) add build triggers on top of that and you'll be able to do fairly complex stuff without the headaches ! this is why I like Google Cloud Platform so much :)
+When you deployed your Cloud Run instance, every revision that will make on it will have the same TLS protected URL out of the box ! This auto-generated URL is a safe place to test stuff in real world conditions.
+For instance, you could deploy a different service for each locale so you can try internationalization without even having to point any domain to the real thing ;)
+Add build triggers on top of that and you'll be able to do fairly complex stuff without the headaches ! this is why I like Google Cloud Platform so much :)
 
 ### automatic deployment
 
@@ -170,7 +167,8 @@ I thought I was about to read endless docs and writing countless YAML files in t
 ![create continuous deployment button](./public/docs/gcp/create_cd_btn.png)
 - when you click on this, just follow the steps, which are:
   - selecting the branch(es) from where you want to trigger builds on push (this may prompt you to choose your GitHub providers and connect specific or all repos)
-  - selecting the Dockerfile that you want to build, one limitation though is that the build context will be the folder where the Dockerfile lives, so you may need to create a CI Dockerfile at the root of the repo if your prod Dockerfile is nested somewhere...
+  - selecting the Dockerfile that you want to build, one limitation though is that the build context will be the folder where the Dockerfile lives, so you may need to create a CI Dockerfile at the root of the repo if your prod Dockerfile is nested somewhere... pretty cumbersome !
 - now, every time a commit is pushed to the triggering branch, it will be automatically deployed 🆒
-- however, the deployed image wont be pushed to the Artifact Registry, as it was the case with manual deploys; but it is pushed to the Container Registry instead... still trying to figure out how to sync both registries 🤔
+- in the case of this repo, it will be the `main` branch
+- however, the deployed image wont be pushed to the Artifact Registry, as it was the case with manual deploys; but instead your Dockerfile is built and directly pushed to the Container Registry instead... still trying to figure out how to sync both registries 🤔
 - that means if you manually deploy a new container image, it will be overridden the next time the Cloud Build trigger runs
