@@ -184,5 +184,6 @@ Mapping a domain is also pretty straightforward:
 - on click, you arrive on the domain mappings section
 - just click the `ADD MAPPING` domain and select the correct service and domain (don't use a subdomain if it's your first mapping)
 - if domain mappings are not available for your region (that's the case for a lot of regions in Europe), check out <https://cloud.google.com/run/docs/mapping-custom-domains#limitations>
+- you can also add a domain mapping for any subdomain
 - follow instructions in <https://cloud.google.com/run/docs/mapping-custom-domains?_ga=2.169427362.-284760377.1664096993#dns_update>
 - deploying to domain preferred method is the manual one
