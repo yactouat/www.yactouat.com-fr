@@ -1,0 +1,14 @@
+---
+services:
+
+  app:
+    build:
+      context: ./
+      dockerfile: ./docker/php/dev.Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www/html
+      - /var/www/html/vendor/
+    ports:
+      - 80:80
+      - 9003:9003

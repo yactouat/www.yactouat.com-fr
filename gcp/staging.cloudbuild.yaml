@@ -1,0 +1,31 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'europe-west6-docker.pkg.dev/yactouat/staging/php:$SHORT_SHA', '-f', 'docker/php/prod.Dockerfile', '.']
+    id: Build
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - 'europe-west6-docker.pkg.dev/yactouat/staging/php:$SHORT_SHA'
+    id: Push
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    args:
+      - run
+      - services
+      - update
+      - wwwyactouatdotfr-staging
+      - '--platform=managed'
+      - '--image=europe-west6-docker.pkg.dev/yactouat/staging/php:$SHORT_SHA'
+      - >-
+        --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID
+      - '--region=europe-west6'
+      - '--quiet'
+    id: Deploy
+    entrypoint: gcloud
+images:
+  - 'europe-west6-docker.pkg.dev/yactouat/staging/php:$SHORT_SHA'
+options:
+  substitutionOption: ALLOW_LOOSE
+tags:
+  - gcp-cloud-build-deploy-cloud-run
+  - gcp-cloud-build-deploy-cloud-run-managed
+  - php

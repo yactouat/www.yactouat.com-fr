@@ -1,0 +1,52 @@
+#!/usr/bin/env php
+<?php
+/**
+ * pre commit hook to copy in the ./git/hooks folder
+ *
+ * ! don't forget it to make it executable
+ *
+ * using a Docker running PHP container,
+ * - lints PHP code in
+ *  - src
+ *  - tests
+ * - checks if PHPUnit tests pass
+ * - generates PHP documentation
+ */
+
+// linting
+echo PHP_EOL."linting PHP Code...".PHP_EOL;
+exec("./vendor/bin/php-cs-fixer fix src");
+exec("./vendor/bin/php-cs-fixer fix tests");
+
+// run tests
+echo PHP_EOL."Running PHPUnit tests...".PHP_EOL;
+exec(
+    'docker exec -t wwwyactouatcom-fr-app-1 bash -c "/var/www/html/vendor/bin/phpunit /var/www/html/tests" --testdox --colors',
+    $unitTestsOutput,
+    $unitTestReturnCode
+);
+echo PHP_EOL . implode(PHP_EOL, $unitTestsOutput) . PHP_EOL;
+if ($unitTestReturnCode !== 0) {
+    echo "Aborting commit because tests did not pass..." . PHP_EOL;
+    exit(1);
+}
+
+// generate docs
+if (!file_exists("phpDocumentor.phar")) {
+    exec("wget https://phpdoc.org/phpDocumentor.phar", $getPhpDocumentorOutput, $getPhpDocumentorReturnCode);
+    if ($getPhpDocumentorReturnCode !== 0) {
+        echo "could not download phpDocumentor, aborting commit..." . PHP_EOL;
+        exit(1);
+    }
+}
+exec("php phpDocumentor.phar", $phpDocumentorOutput, $phpDocumentorReturnCode);
+echo PHP_EOL . implode(PHP_EOL, $phpDocumentorOutput) . PHP_EOL;
+if ($phpDocumentorReturnCode !== 0) {
+    echo "could not generate PHP docs, aborting commit..." . PHP_EOL;
+    exit(1);
+}
+
+// adding linting and documentation changes
+exec("git add .");
+
+exit(0);

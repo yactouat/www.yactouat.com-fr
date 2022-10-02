@@ -1,0 +1,5 @@
+.phpunit.result.cache
+.idea
+phpDocumentor.phar
+.phpdoc
+.php-cs-fixer.cache

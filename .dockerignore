@@ -1,0 +1,6 @@
+.phpunit.result.cache/
+.idea/
+*.Dockerfile
+.dockerignore
+vendor/*
+!vendor/.gitignore

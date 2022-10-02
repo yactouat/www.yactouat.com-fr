@@ -1,0 +1,33 @@
+# using europe-west1 here because it allows for domain mappings without the need of setting up a load balancer
+# this means an Artifact Registry repo is needed in that region
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'europe-west1-docker.pkg.dev/yactouat/prod/php:$TAG_NAME', '-f', 'docker/php/prod.Dockerfile', '.']
+    id: Build
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - 'europe-west1-docker.pkg.dev/yactouat/prod/php:$TAG_NAME'
+    id: Push
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    args:
+      - run
+      - services
+      - update
+      - wwwyactouatdotfr-prod
+      - '--platform=managed'
+      - '--image=europe-west1-docker.pkg.dev/yactouat/prod/php:$TAG_NAME'
+      - >-
+        --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID
+      - '--region=europe-west1'
+      - '--quiet'
+    id: Deploy
+    entrypoint: gcloud
+images:
+  - 'europe-west1-docker.pkg.dev/yactouat/prod/php:$TAG_NAME'
+options:
+  substitutionOption: ALLOW_LOOSE
+tags:
+  - gcp-cloud-build-deploy-cloud-run
+  - gcp-cloud-build-deploy-cloud-run-managed
+  - php
