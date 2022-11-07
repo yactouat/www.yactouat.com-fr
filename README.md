@@ -14,8 +14,6 @@
         - [QA manual tests](#qa-manual-tests)
     - [debug the app'](#debug-the-app)
         - [VSCode](#vscode)
-    - [Documentation](#documentation)
-        - [PHP code](#php-code)
     - [CI/CD](#cicd)
         - [CI: locally](#ci-locally)
         - [CI: GitHub Actions](#ci-github-actions)
@@ -64,6 +62,7 @@ my personal website take #999999999999, app' may be in French or in English, hen
 
 ## how to run
 
+- `composer install --ignore-platform-reqs`
 - `docker compose up`
 - go to <http://localhost>
 
@@ -95,19 +94,6 @@ my personal website take #999999999999, app' may be in French or in English, hen
 - once VSCode is open inside the container, you can run the pre configured PHP debugger from within the UI and start to place breakpoints
 - when a request hits the app', you'll be able to debug it !
 
-## Documentation
-
-### PHP code
-
-- on any environment/deployment, view the docs at `/docs`
-- we use [phpDocumentor](https://www.phpdoc.org/) and it's [PHAR executable](https://phpdoc.org/phpDocumentor.phar)
-- to generate the documentation, just run => `php phpDocumentor.phar` (make sure you have downloaded the PHAR provided in the link above if you're doing this manually)
-- to get a feel at how to write PHP doc blocks, check out =>
-  - <https://docs.phpdoc.org/3.0/guide/getting-started/what-is-a-docblock.html>
-  - <https://docs.phpdoc.org/3.0/guide/guides/docblocks.html>
-  - <https://docs.phpdoc.org/3.0/guide/guides/types.html>
-- the documentation configuration is described in `phpdoc.dist.xml`
-
 ## CI/CD
 
 ### CI: locally
@@ -117,7 +103,6 @@ my personal website take #999999999999, app' may be in French or in English, hen
 - `git add . && git commit -m "initial commit"` =>
   - see the linting happening
   - see the magic of a local testing pipeline happening !
-  - see the PHP documentation generated in `./public/docs/php`
   - see whatever changes made by these operations get auto committed
 
 ### CI: GitHub Actions
@@ -166,7 +151,7 @@ There are two build triggers pre configured in the GCP UI =>
   - to push a tag => `git tag tag_name && git push origin tag_name`
 - one for staging, that runs for each commit that is not on the main branch; as I work alone I allow myself to do this for now, but if you're using this repo as a template, you may want to consider a unique staging branch and restrict the trigger to that branch
 - cloud build steps are specified in the `gcp` folder
-- all images are sent to GCP's Artifact Registry and not Container Registry
+- in my project, all images are sent to GCP's Artifact Registry and not Container Registry
 
 ## mapping a domain to your Cloud Run service
 

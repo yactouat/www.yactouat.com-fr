@@ -7,7 +7,7 @@ namespace App;
 /**
  * this class is the entry point of our application
  */
-final class EntryPoint
+final class WebApp
 {
     /** @var Conf the configuration provided to the entry point of the app' */
     private Conf $_conf;
@@ -33,7 +33,7 @@ final class EntryPoint
      *
      * @return void
      */
-    public function respond(): void
+    public function sendResponse(): void
     {
         // checking if shared (and dev if relevant) configurations are properly set
         if (!Conf::checkDevConf() || !Conf::checkSharedConf()) {
