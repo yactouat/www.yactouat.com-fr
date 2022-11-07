@@ -1,4 +1,4 @@
-FROM php:8.1.10-apache
+FROM php:8.1.12-apache
 
 # install required system dependencies
 RUN apt-get update \
@@ -30,7 +30,7 @@ RUN mv /var/www/html/docker/php/dev.ini /usr/local/etc/php/conf.d/dev.ini
 # get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# # changing user (because cannot run Composer as root inside container)
+# changing user (because cannot run Composer as root inside container)
 USER wwwyactouatdotcom
 
 # getting into app' directory
