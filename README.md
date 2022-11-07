@@ -122,7 +122,7 @@ manual deploys are useful during the development process, if you want to see the
 
 ##### build and push the backend API image to Google Cloud Artifact Registry
 
-- build and tag the relevant Docker image locally, replacing the placeholders (without the `{}`, to replace with the data of your Google Cloud project) => `docker build -t {gCloudRegion}-docker.pkg.dev/{projectId}/{nameOfTheArtifactRegistryRepo}/{nameOfYourContainer}:{tag} -f ./docker/{languageFolder}/prod.Dockerfile .`
+- build and tag the relevant Docker image locally, replacing the placeholders (without the `{}`, to replace with the data of your Google Cloud project) => `docker build -t {gCloudRegion}-docker.pkg.dev/{projectId}/{nameOfTheArtifactRegistryRepo}/{nameOfYourContainer}:{tag} -f ./docker/{languageFolder}/{prod|dev}.Dockerfile .`
 - push the images to the Artifact Registry, replacing the placeholders (without the `{}`, to replace with the data of your Google Cloud project) => `docker push {gCloudRegion}-docker.pkg.dev/{projectId}/{nameOfTheArtifactRegistryRepo}/{nameOfYourContainer}:{tag}`
 
 ###### PHP specifics
@@ -147,6 +147,7 @@ Add build triggers on top of that and you'll be able to do fairly complex stuff 
 
 There are two build triggers pre configured in the GCP UI =>
 
+- ! be aware that you must have pushed the prod and the staging Cloud Run services once with the right port (80) and the `--allow-unauthenticated` flag once with the CLI before being able to run those triggers
 - one for prod, that is run on tagging the main branch; tags must follow the pattern `^v(\d+)\.(\d+)\.(\d+)$`
   - to push a tag => `git tag tag_name && git push origin tag_name`
 - one for staging, that runs for each commit that is not on the main branch; as I work alone I allow myself to do this for now, but if you're using this repo as a template, you may want to consider a unique staging branch and restrict the trigger to that branch
