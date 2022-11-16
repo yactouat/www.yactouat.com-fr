@@ -1,7 +1,10 @@
 /* variables */
 :root {
+    --primary-color: #2b2b2b;
+    --secondary-color: #D1603D;
     --spacing: 8px;
     --spacing-2: 16px;
+    --tertiary-color: #DDB967;
     --gridItemInflate-delay: 50ms;
 }
 
@@ -24,6 +27,7 @@
 }
 *::not(i) {
     font-family: 'Roboto', sans-serif;
+    color: var(--primary-color);
 }
 html {
     box-sizing: border-box;
@@ -34,9 +38,13 @@ html, body {
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Roboto Condensed', sans-serif;
+    color: var(--secondary-color);
 }
 a {
-    color: black;
+    color: var(--tertiary-color);
+}
+a > i {
+    color: var(--primary-color);
 }
 header, main {
     padding-top: var(--spacing-2);
