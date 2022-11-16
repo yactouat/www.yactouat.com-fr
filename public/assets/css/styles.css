@@ -61,7 +61,7 @@ header h2 {
     margin: 0;
     font-size: medium;
 }
-#header-social-icons {
+#header_social-icons {
     padding-top: var(--spacing);
     font-size: x-large;
     display: grid;
@@ -72,29 +72,59 @@ header h2 {
     gap: var(--spacing);
     align-items: center;
 }
-.header-social-icon {
+.header_social-icon {
     animation: gridItemInflate 350ms ease-out;
     animation-fill-mode: backwards;
 }
 /* TODO factorize social icons animations in a Sass loop */
-.header-social-icon:first-of-type {
+.header_social-icon:first-of-type {
     animation-delay: calc(1 * var(--gridItemInflate-delay));
 }
-.header-social-icon:nth-child(2) {
+.header_social-icon:nth-child(2) {
     animation-delay: calc(2 * var(--gridItemInflate-delay));
 }
-.header-social-icon:nth-child(3) {
+.header_social-icon:nth-child(3) {
     animation-delay: calc(3 * var(--gridItemInflate-delay));
 }
-.header-social-icon:nth-child(4) {
+.header_social-icon:nth-child(4) {
     animation-delay: calc(4 * var(--gridItemInflate-delay));
 }
-.header-social-icon:nth-child(5) {
+.header_social-icon:nth-child(5) {
     animation-delay: calc(5 * var(--gridItemInflate-delay));
 }
-.header-social-icon:nth-child(6) {
+.header_social-icon:nth-child(6) {
     animation-delay: calc(6 * var(--gridItemInflate-delay));
 }
-.header-social-icon:nth-child(7) {
+.header_social-icon:nth-child(7) {
     animation-delay: calc(7 * var(--gridItemInflate-delay));
+}
+.header_about-text {
+    padding: var(--spacing);
+}
+
+/* main presentation styles */
+.main_presentation_heading, .main_presentation-section_heading, .main_presentation-section_text {
+    padding: var(--spacing);
+}
+.main_presentation_heading, .main_presentation-section_heading {
+    padding-top: var(--spacing-2);
+    padding-bottom: var(--spacing);
+}
+.main_presentation_heading {
+    text-align: center;
+    text-decoration: underline;
+}
+.main_presentation-section_text ul {
+    list-style-type: circle;
+    list-style-position: inside;
+}
+
+@media screen and (min-width: 1200px) {
+    .main_presentation {
+        display: flex;
+        gap: var(--spacing-2)
+    }
+    .main_presentation_heading, .main_presentation-section_heading, .main_presentation-section_text {
+        padding: var(--spacing-2);
+    }
 }
