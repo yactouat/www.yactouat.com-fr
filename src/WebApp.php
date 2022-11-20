@@ -27,7 +27,9 @@ final class WebApp
         // checking if shared (and dev if relevant) configurations are properly set
         if (!Conf::checkDevConf() || !Conf::checkSharedConf()) {
             http_response_code(500);
-            die("conf KO");
+            phpinfo();
+            die();
+            // die("conf KO");
         }
         // TODO move setting the HTTP response elsewhere and/or test exception
         http_response_code(200);
