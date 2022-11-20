@@ -67,8 +67,5 @@ COPY ./composer.prod.json /var/www/html/composer.json
 # installing Composer deps for prod, the vendor folder will only be populated inside the container
 RUN composer install --no-dev
 
-# setting the app' environment
-ENV APP_ENV="PROD"
-
 # running Apache
 CMD apache2-foreground
