@@ -64,7 +64,6 @@ final class Conf
      */
     public static function checkDevConf(): bool
     {
-        die('CURRENT ENV IS ' . getenv(Constants::APP_ENV));
         if (self::isProdEnv()) {
             return true;
         }
