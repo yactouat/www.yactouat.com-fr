@@ -58,8 +58,9 @@ final class Conf
      *
      * - `display_errors` is supposed to be on
      * - `display_startup_errors` is supposed to be on
+     * when app' env is set to prod, returns true because there is nothing to check
      *
-     * @return bool when app' env is set to prod, returns true because there is nothing to check
+     * @return bool
      */
     public static function checkDevConf(): bool
     {
@@ -89,7 +90,7 @@ final class Conf
      */
     public static function isDevEnv(): bool
     {
-        return getenv(Constants::APP_ENV, true) === Constants::DEV_ENV;
+        return ($_ENV[Constants::APP_ENV] ?? '') === Constants::DEV_ENV;
     }
 
     /**
@@ -99,7 +100,7 @@ final class Conf
      */
     public static function isProdEnv(): bool
     {
-        return getenv(Constants::APP_ENV, true) === Constants::PROD_ENV;
+        return ($_ENV[Constants::APP_ENV] ?? '') === Constants::PROD_ENV;
     }
 
     /**

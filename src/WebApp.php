@@ -13,18 +13,6 @@ final class WebApp
     private Conf $_conf;
 
     /**
-     * creates a new instance of the app'
-     *
-     * @param string $rootDir
-     *
-     * @return void
-     */
-    public function __construct(string $rootDir)
-    {
-        $this->_conf = new Conf($rootDir);
-    }
-
-    /**
      * responds to clients requests
      *
      * checks if shared (and dev if relevant) configurations are properly set before actually sending the expected response
@@ -35,12 +23,26 @@ final class WebApp
      */
     public function sendResponse(): void
     {
+        // TODO move this logic elsewhere and/or test exception
         // checking if shared (and dev if relevant) configurations are properly set
         if (!Conf::checkDevConf() || !Conf::checkSharedConf()) {
             http_response_code(500);
             die("conf KO");
         }
+        // TODO move setting the HTTP response elsewhere and/or test exception
         http_response_code(200);
         echo $this->_conf->twig->render("index.html.twig");
+    }
+
+    /**
+     * sets the conf of the web app'
+     *
+     * @param string $rootDir
+     * @return self
+     */
+    public function setConf(string $rootDir): self
+    {
+        $this->_conf = new Conf($rootDir);
+        return $this;
     }
 }

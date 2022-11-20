@@ -8,4 +8,4 @@ require_once $rootDir."/vendor/autoload.php";
 use App\WebApp;
 
 // sending response to client request
-(new WebApp($rootDir))->sendResponse();
+(new WebApp())->setConf($rootDir)->sendResponse();
