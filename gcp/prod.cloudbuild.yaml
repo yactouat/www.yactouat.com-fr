@@ -2,7 +2,7 @@
 # this means an Artifact Registry repo is needed in that region
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'europe-west1-docker.pkg.dev/yactouat/prod/php:$TAG_NAME', '-f', 'docker/php/prod.Dockerfile', '.']
+    args: ['build', '-t', 'europe-west1-docker.pkg.dev/yactouat/prod/php:$TAG_NAME', '-f', 'docker/php/deploy.Dockerfile', '.']
     id: Build
   - name: gcr.io/cloud-builders/docker
     args:

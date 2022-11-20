@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: ./
-      dockerfile: ./docker/php/dev.Dockerfile
+      dockerfile: ./docker/php/local.Dockerfile
     restart: unless-stopped
     volumes:
       - ./:/var/www/html
