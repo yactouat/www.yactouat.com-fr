@@ -90,7 +90,7 @@ final class Conf
      */
     public static function isDevEnv(): bool
     {
-        return ($_ENV[Constants::APP_ENV] ?? '') === Constants::DEV_ENV;
+        return ($_ENV[Constants::APP_ENV] ?? getenv($_ENV[Constants::APP_ENV])) === Constants::DEV_ENV;
     }
 
     /**
@@ -100,7 +100,7 @@ final class Conf
      */
     public static function isProdEnv(): bool
     {
-        return ($_ENV[Constants::APP_ENV] ?? '') === Constants::PROD_ENV;
+        return ($_ENV[Constants::APP_ENV] ?? getenv($_ENV[Constants::APP_ENV])) === Constants::PROD_ENV;
     }
 
     /**
