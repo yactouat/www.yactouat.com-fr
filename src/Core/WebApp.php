@@ -7,6 +7,7 @@ namespace App\Core;
 use App\Conf;
 use App\Constants;
 use App\Exceptions\Error\ConfKOException;
+use App\Services\PersonalIntroServiceInterface;
 
 /**
  * this class is responsible for building the response that will be sent to the client
@@ -15,6 +16,9 @@ final class WebApp
 {
     /** @var Conf the configuration provided to the entry point of the app' */
     private Conf $_conf;
+
+    /** @var PersonalIntroServiceInterface the service that fetches yactouat's personal intro data */
+    private PersonalIntroServiceInterface $_personalIntroService;
 
     /** @var string the HTTP response body that will be sent */
     private string $_responseBody;
@@ -61,9 +65,10 @@ final class WebApp
      *
      * @return self
      */
-    public function init(string $rootDir): self
+    public function init(string $rootDir, PersonalIntroServiceInterface $personalIntroService): self
     {
         return $this->setConf($rootDir)
+            ->setPersonalIntroService($personalIntroService)
             ->setStatusCode()
             ->setResponseBody();
     }
@@ -80,6 +85,12 @@ final class WebApp
         return $this;
     }
 
+    public function setPersonalIntroService(PersonalIntroServiceInterface $personalIntroService): self
+    {
+        $this->_personalIntroService = $personalIntroService;
+        return $this;
+    }
+
     /**
      * dynamically sets the response body to send to the client
      *
@@ -89,7 +100,9 @@ final class WebApp
     {
         try {
             $this->checkConf();
-            $this->_responseBody = $this->_conf->twig->render("index.html.twig");
+            $this->_responseBody = $this->_conf->twig->render("index.html.twig", [
+                'personalIntroSections' => $this->_personalIntroService->getSections()
+            ]);
         } catch (ConfKOException $cke) {
             $this->_responseBody = $this->_conf->twig->render("500_error.html.twig");
         }

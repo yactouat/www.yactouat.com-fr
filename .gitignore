@@ -3,3 +3,4 @@
 phpDocumentor.phar
 .phpdoc
 .php-cs-fixer.cache
+tmp*.md

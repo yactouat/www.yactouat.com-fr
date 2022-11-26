@@ -28,6 +28,7 @@ final class Constants
     /** @var string conf KO error message */
     public const ERR_EXP_CONFKO = 'conf KO';
     public const EXP_PEMPTY = 'paragraph cannot be empty';
+    public const EXP_SECTEMPTY = 'section cannot be empty';
 
     /** @var string response OK HTTP status code */
     public const HTTP_OK_CODE = 200;

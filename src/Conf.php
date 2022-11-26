@@ -7,6 +7,7 @@ namespace App;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader as TwigLoader;
+use Twig\TwigFilter;
 
 /**
  * this class is responsible for managing configuration for all and each envs
@@ -49,6 +50,30 @@ final class Conf
         if (self::isDevEnv()) {
             $this->twig->addExtension(new DebugExtension());
         }
+        $sectionsFilter = new TwigFilter('parseSection', function ($val) {
+            $section = '<section class="main_container-section">
+                <h3 class="main_container-section_heading">'
+                    . $val['heading']
+                . '</h3>
+                <div class="main_container-section_text">';
+            $areParagraphs = $val['paragraphs'] ?? false;
+            $areListItems= $val['listItems'] ?? false;
+            if ($areParagraphs) {
+                foreach ($val['paragraphs'] as $p) {
+                    $section .= '<p>' . $p . '</p>';
+                }
+            }
+            if ($areListItems) {
+                $section .= '<ul>';
+                foreach ($val['listItems'] as $li) {
+                    $section .= '<li>' . $li . '</li>';
+                }
+                $section .= '</ul>';
+            }
+            $section .= '</div></section>';
+            return $section;
+        });
+        $this->twig->addFilter($sectionsFilter);
     }
 
     /**

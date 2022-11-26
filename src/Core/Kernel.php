@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+use App\Services\HardcodedPersonalIntroService;
+
 /**
  * this responsible for being the entry point to our application
  */
@@ -17,7 +19,8 @@ final class Kernel
      */
     public function runReqResRound(string $rootDir): void
     {
-        $webApp = (new WebApp())->init($rootDir);
+        $personalIntroService = new HardcodedPersonalIntroService();
+        $webApp = (new WebApp())->init($rootDir, $personalIntroService);
         http_response_code($webApp->getStatusCode());
         echo $webApp->getResponseBody();
     }
