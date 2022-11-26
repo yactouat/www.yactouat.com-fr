@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Core;
 
+use App\Conf;
 use App\Exceptions\Error\ConfKOException;
 
 /**

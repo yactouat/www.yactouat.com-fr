@@ -54,7 +54,7 @@ final class ConfTest extends TestCase
 
     public function testConstructSetsRootDir()
     {
-        $expected = getcwd();
+        $expected = Constants::DOCKER_ROOT_DIR;
         $conf = new Conf($expected);
         $actual = $conf->getRootDir();
         $this->assertSame($expected, $actual);
@@ -62,7 +62,7 @@ final class ConfTest extends TestCase
 
     public function testConstructLoadsTwigEnv()
     {
-        $conf = new Conf(getcwd());
+        $conf = new Conf(Constants::DOCKER_ROOT_DIR);
         $this->assertInstanceOf(Environment::class, $conf->twig);
     }
 }

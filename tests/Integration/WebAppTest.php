@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Integration;
 
 use App\Constants;
+use App\Core\WebApp;
 use App\Exceptions\Error\ConfKOException;
-use App\WebApp;
 use PHPUnit\Framework\TestCase;
 
 final class WebAppTest extends TestCase
@@ -25,7 +25,7 @@ final class WebAppTest extends TestCase
 
     public function testSendResponseWithBadConfThrowsConfKoException()
     {
-        $actual = (new WebApp())->setConf(getcwd());
+        $actual = (new WebApp())->setConf(Constants::DOCKER_ROOT_DIR);
         ini_set("display_errors", 0);
         $this->expectException(ConfKOException::class);
         $this->expectExceptionMessage(Constants::ERR_EXP_CONFKO);

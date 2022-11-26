@@ -14,12 +14,14 @@ namespace App;
 final class Constants
 {
     /** @var string key to reference on which env the app' runs */
-    public const APP_ENV = "APP_ENV";
+    public const APP_ENV = 'APP_ENV';
     /** @var string value to reference the dev environment */
-    public const DEV_ENV = "DEV";
+    public const DEV_ENV = 'DEV';
+    /** @var string root dir if you run the app' in Docker (which is strongly recommended) */
+    public const DOCKER_ROOT_DIR = '/var/www/html';
     /** @var string value to reference the prod environment */
-    public const PROD_ENV = "PROD";
+    public const PROD_ENV = 'PROD';
 
     /** @var string conf KO error message */
-    public const ERR_EXP_CONFKO = "conf KO";
+    public const ERR_EXP_CONFKO = 'conf KO';
 }
