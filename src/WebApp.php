@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Exceptions\Error\ConfKOException;
+
 /**
  * this class is the entry point of our application
  */
@@ -13,23 +15,34 @@ final class WebApp
     private Conf $_conf;
 
     /**
+     * checks app conf, throws if KO
+     *
+     * @throws ConfKOException
+     *
+     * @return void
+     */
+    private function _checkConf(): void
+    {
+        if (!Conf::checkDevConf() || !Conf::checkSharedConf()) {
+            throw new ConfKOException();
+        }
+    }
+
+    /**
      * responds to clients requests
      *
      * checks if shared (and dev if relevant) configurations are properly set before actually sending the expected response
      *
      * @param string $rootDir
      *
+     * @throws ConfKOException
+     *
      * @return void
      */
     public function sendResponse(): void
     {
-        // TODO move this logic elsewhere and/or test exception
-        // checking if shared (and dev if relevant) configurations are properly set
-        if (!Conf::checkDevConf() || !Conf::checkSharedConf()) {
-            http_response_code(500);
-            die("conf KO");
-        }
-        // TODO move setting the HTTP response elsewhere and/or test exception
+        $this->_checkConf();
+        // TODO move setting the HTTP response code elsewhere
         http_response_code(200);
         echo $this->_conf->twig->render("index.html.twig");
     }

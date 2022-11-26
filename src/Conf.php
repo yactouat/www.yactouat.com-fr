@@ -52,7 +52,8 @@ final class Conf
     {
         $loader = new TwigLoader($this->_rootDir . '/views');
         $this->twig = new Environment($loader, [
-            'debug' => self::isDevEnv()
+            'debug' => self::isDevEnv(),
+            'cache' => false
         ]);
         if (self::isDevEnv()) {
             $this->twig->addExtension(new DebugExtension());

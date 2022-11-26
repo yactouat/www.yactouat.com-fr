@@ -11,19 +11,16 @@ use Twig\Environment;
 
 final class ConfTest extends TestCase
 {
+    use TestConfTrait;
+
     protected function setUp(): void
     {
-        $_ENV[Constants::APP_ENV] = Constants::DEV_ENV;
+        $this->setTestConf();
     }
 
-    // resetting the PHP conf and the env after tests ran
     protected function tearDown(): void
     {
-        ini_set("log_errors", 1);
-        ini_set("display_errors", 1);
-        ini_set("display_startup_errors", 1);
-        ini_set("error_reporting", E_ALL);
-        unset($_ENV[Constants::APP_ENV]);
+        $this->setTestConf();
     }
 
     public function testCheckDevConf()
