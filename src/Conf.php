@@ -29,16 +29,7 @@ final class Conf
     public function __construct(private string $rootDir)
     {
         $this->_rootDir = $rootDir;
-        $this->_initDisplayErrors();
         $this->_initTwig();
-    }
-
-    private function _initDisplayErrors(): void
-    {
-        if (self::isDevEnv()) {
-            ini_set("display_errors", 1);
-            ini_set("display_startup_errors", 1);
-        }
     }
 
     /**

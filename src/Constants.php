@@ -10,6 +10,7 @@ namespace App;
  * code is grouped into sections for readability:
  * - env related constants
  * - errors and exceptions related constants
+ * - HTTP status codes
  */
 final class Constants
 {
@@ -18,10 +19,15 @@ final class Constants
     /** @var string value to reference the dev environment */
     public const DEV_ENV = 'DEV';
     /** @var string root dir if you run the app' in Docker (which is strongly recommended) */
-    public const DOCKER_ROOT_DIR = '/var/www/html';
+    public const DOCKER_ROOTDIR = '/var/www/html';
     /** @var string value to reference the prod environment */
     public const PROD_ENV = 'PROD';
 
     /** @var string conf KO error message */
     public const ERR_EXP_CONFKO = 'conf KO';
+
+    /** @var string response OK HTTP status code */
+    public const HTTP_OK_CODE = 200;
+    /** @var string server error HTTP status code */
+    public const HTTP_SERVERERR_CODE = 500;
 }

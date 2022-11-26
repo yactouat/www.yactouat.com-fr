@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Core;
 
 use App\Conf;
+use App\Constants;
 use App\Exceptions\Error\ConfKOException;
 
 /**
@@ -15,6 +16,9 @@ final class WebApp
     /** @var Conf the configuration provided to the entry point of the app' */
     private Conf $_conf;
 
+    /** @var int the HTTP status code that will be send in the response */
+    private int $_statusCode;
+
     /**
      * checks app conf, throws if KO
      *
@@ -22,7 +26,7 @@ final class WebApp
      *
      * @return void
      */
-    private function _checkConf(): void
+    public function checkConf(): void
     {
         if (!Conf::checkDevConf() || !Conf::checkSharedConf()) {
             throw new ConfKOException();
@@ -30,22 +34,25 @@ final class WebApp
     }
 
     /**
-     * responds to clients requests
+     * gets the HTTP response body to be returned to the client
      *
-     * checks if shared (and dev if relevant) configurations are properly set before actually sending the expected response
+     * TODO test
      *
-     * @param string $rootDir
-     *
-     * @throws ConfKOException
-     *
-     * @return void
+     * @return string
      */
-    public function sendResponse(): void
+    public function getResponseBody(): string
     {
-        $this->_checkConf();
-        // TODO move setting the HTTP response code elsewhere
-        http_response_code(200);
-        echo $this->_conf->twig->render("index.html.twig");
+        return $this->_conf->twig->render("index.html.twig");
+    }
+
+    /**
+     * gets the HTTP status code that will be send in the response
+     *
+     * @return integer
+     */
+    public function getStatusCode(): int
+    {
+        return $this->_statusCode;
     }
 
     /**
@@ -57,6 +64,17 @@ final class WebApp
     public function setConf(string $rootDir): self
     {
         $this->_conf = new Conf($rootDir);
+        return $this;
+    }
+
+    public function setStatusCode(): self
+    {
+        try {
+            $this->checkConf();
+            $this->_statusCode = Constants::HTTP_OK_CODE;
+        } catch (ConfKOException $cke) {
+            $this->_statusCode = Constants::HTTP_SERVERERR_CODE;
+        }
         return $this;
     }
 }
