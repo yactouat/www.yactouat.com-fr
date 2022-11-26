@@ -9,7 +9,6 @@ namespace App\Core;
  */
 final class Kernel
 {
-    // TODO test
     /**
      * executes a round of HTTP request/response cycle
      *

@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration;
+namespace Tests\Integration\Core;
 
 use App\Constants;
 use App\Core\WebApp;
 use App\Exceptions\Error\ConfKOException;
 use PHPUnit\Framework\TestCase;
+use Tests\Integration\TestConfTrait;
 use Yactouat\Dev\StringsComparatorTrait;
 
 final class WebAppTest extends TestCase
