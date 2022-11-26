@@ -20,6 +20,8 @@ final class Constants
     public const DEV_ENV = 'DEV';
     /** @var string root dir if you run the app' in Docker (which is strongly recommended) */
     public const DOCKER_ROOTDIR = '/var/www/html';
+    /** @var string tests fixtures dir if you run the app' in Docker (which is strongly recommended) */
+    public const DOCKER_FIXTURESDIR = '/var/www/html/tests/fixtures/';
     /** @var string value to reference the prod environment */
     public const PROD_ENV = 'PROD';
 

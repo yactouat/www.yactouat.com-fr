@@ -9,12 +9,15 @@ use App\Constants;
 use App\Exceptions\Error\ConfKOException;
 
 /**
- * this class is the entry point of our application
+ * this class is responsible for building the response that will be sent to the client
  */
 final class WebApp
 {
     /** @var Conf the configuration provided to the entry point of the app' */
     private Conf $_conf;
+
+    /** @var string the HTTP response body that will be sent */
+    private string $_responseBody;
 
     /** @var int the HTTP status code that will be send in the response */
     private int $_statusCode;
@@ -36,13 +39,11 @@ final class WebApp
     /**
      * gets the HTTP response body to be returned to the client
      *
-     * TODO test
-     *
      * @return string
      */
     public function getResponseBody(): string
     {
-        return $this->_conf->twig->render("index.html.twig");
+        return $this->_responseBody;
     }
 
     /**
@@ -53,6 +54,18 @@ final class WebApp
     public function getStatusCode(): int
     {
         return $this->_statusCode;
+    }
+
+    /**
+     * sets the conf, the HTTP status code, and the response body
+     *
+     * @return self
+     */
+    public function init(string $rootDir): self
+    {
+        return $this->setConf($rootDir)
+            ->setStatusCode()
+            ->setResponseBody();
     }
 
     /**
@@ -67,6 +80,27 @@ final class WebApp
         return $this;
     }
 
+    /**
+     * dynamically sets the response body to send to the client
+     *
+     * @return self
+     */
+    public function setResponseBody(): self
+    {
+        try {
+            $this->checkConf();
+            $this->_responseBody = $this->_conf->twig->render("index.html.twig");
+        } catch (ConfKOException $cke) {
+            $this->_responseBody = $this->_conf->twig->render("500_error.html.twig");
+        }
+        return $this;
+    }
+
+    /**
+     * dynamically sets the HTTP status code to send to the client
+     *
+     * @return self
+     */
     public function setStatusCode(): self
     {
         try {

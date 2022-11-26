@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+/**
+ * this responsible for being the entry point to our application
+ */
 final class Kernel
 {
-    public function run(string $rootDir): void
+    // TODO test
+    /**
+     * executes a round of HTTP request/response cycle
+     *
+     * @param string $rootDir of the application
+     * @return void
+     */
+    public function runReqResRound(string $rootDir): void
     {
-        // TODO test http code + server error page
-        // TODO log exception message
-        // TODO test
-        $webApp = (new WebApp())
-            ->setConf($rootDir)
-            ->setStatusCode();
+        $webApp = (new WebApp())->init($rootDir);
         http_response_code($webApp->getStatusCode());
         echo $webApp->getResponseBody();
     }

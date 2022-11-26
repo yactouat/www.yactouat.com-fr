@@ -8,4 +8,4 @@ require_once $rootDir."/vendor/autoload.php";
 use App\Core\Kernel;
 
 // running the app'
-(new Kernel())->run($rootDir);
+(new Kernel())->runReqResRound($rootDir);
