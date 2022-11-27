@@ -101,10 +101,14 @@ final class WebApp
         try {
             $this->checkConf();
             $this->_responseBody = $this->_conf->twig->render("index.html.twig", [
-                'personalIntroSections' => $this->_personalIntroService->getSections()
+                'personalIntroSections' => $this->_personalIntroService->getSections(),
+                'title' => 'accueil',
+                'withPersonalIntro' => true
             ]);
         } catch (ConfKOException $cke) {
-            $this->_responseBody = $this->_conf->twig->render("500_error.html.twig");
+            $this->_responseBody = $this->_conf->twig->render("500_error.html.twig", [
+                'title' => 'erreur serveur'
+            ]);
         }
         return $this;
     }
