@@ -51,11 +51,11 @@ final class Conf
             $this->twig->addExtension(new DebugExtension());
         }
         $sectionsFilter = new TwigFilter('parseSection', function ($val) {
-            $section = '<section class="main_container-section">
-                <h3 class="main_container-section_heading">'
+            $section = '<section class="main_container_section">
+                <h3 class="main_container_section_heading">'
                     . $val['heading']
                 . '</h3>
-                <div class="main_container-section_text">';
+                <div class="main_container_section_text">';
             $areParagraphs = $val['paragraphs'] ?? false;
             $areListItems= $val['listItems'] ?? false;
             if ($areParagraphs) {

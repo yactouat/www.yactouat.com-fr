@@ -54,7 +54,8 @@ final class WebAppTest extends TestCase
         $webApp = (new WebApp())->setConf(Constants::DOCKER_ROOTDIR);
         $webApp->routeTo(new Request());
         $actual = $webApp->getResponseBody();
-        $this->assertTrue($this->stringsHaveSameContent($expected, $actual));
+        // $this->assertTrue($this->stringsHaveSameContent($expected, $actual));
+        $this->assertSame($this->removeSpacesFromString($expected), $this->removeSpacesFromString($actual));
     }
 
     public function testGetStatusCodeCodeSets200StatusCode()
