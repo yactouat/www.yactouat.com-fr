@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit;
+namespace Tests\Integration;
 
 use App\Conf;
 use App\Constants;
@@ -11,14 +11,16 @@ use Twig\Environment;
 
 final class ConfTest extends TestCase
 {
-    // resetting the PHP conf and the env after tests ran
+    use TestConfTrait;
+
+    protected function setUp(): void
+    {
+        $this->setTestConf();
+    }
+
     protected function tearDown(): void
     {
-        ini_set("log_errors", 1);
-        ini_set("display_errors", 1);
-        ini_set("display_startup_errors", 1);
-        ini_set("error_reporting", E_ALL);
-        \putenv(Constants::APP_ENV."=".Constants::DEV_ENV);
+        $this->setTestConf();
     }
 
     public function testCheckDevConf()
@@ -28,7 +30,7 @@ final class ConfTest extends TestCase
 
     public function testCheckDevConfWhenProdReturnsTrue()
     {
-        \putenv(Constants::APP_ENV."=".Constants::PROD_ENV);
+        $_ENV[Constants::APP_ENV] = Constants::PROD_ENV;
         ini_set("display_errors", 0);
         $this->assertTrue(Conf::checkDevConf());
     }
@@ -39,7 +41,7 @@ final class ConfTest extends TestCase
         $this->assertFalse(Conf::checkDevConf());
     }
 
-    public function testCheckSharedConf()
+    public function testCheckSharedConfReturnsTrue()
     {
         $this->assertTrue(Conf::checkSharedConf());
     }
@@ -52,7 +54,7 @@ final class ConfTest extends TestCase
 
     public function testConstructSetsRootDir()
     {
-        $expected = getcwd();
+        $expected = Constants::DOCKER_ROOTDIR;
         $conf = new Conf($expected);
         $actual = $conf->getRootDir();
         $this->assertSame($expected, $actual);
@@ -60,7 +62,7 @@ final class ConfTest extends TestCase
 
     public function testConstructLoadsTwigEnv()
     {
-        $conf = new Conf(getcwd());
+        $conf = new Conf(Constants::DOCKER_ROOTDIR);
         $this->assertInstanceOf(Environment::class, $conf->twig);
     }
 }

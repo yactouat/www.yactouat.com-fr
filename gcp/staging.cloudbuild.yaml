@@ -1,6 +1,6 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'europe-west6-docker.pkg.dev/yactouat/staging/php:$SHORT_SHA', '-f', 'docker/php/prod.Dockerfile', '.']
+    args: ['build', '-t', 'europe-west6-docker.pkg.dev/yactouat/staging/php:$SHORT_SHA', '-f', 'docker/php/deploy.Dockerfile', '.']
     id: Build
   - name: gcr.io/cloud-builders/docker
     args:
@@ -19,6 +19,7 @@ steps:
         --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID
       - '--region=europe-west6'
       - '--quiet'
+      - '--update-env-vars=APP_ENV=DEV'
     id: Deploy
     entrypoint: gcloud
 images:

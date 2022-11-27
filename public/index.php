@@ -1,11 +1,11 @@
 <?php
 
-// defining root dir
+// defining the root dir
 $rootDir = dirname(__DIR__);
 
 // loading deps
 require_once $rootDir."/vendor/autoload.php";
-use App\WebApp;
+use App\Core\Kernel;
 
-// sending response to client request
-(new WebApp($rootDir))->sendResponse();
+// running the app'
+(new Kernel())->runReqResRound($rootDir);

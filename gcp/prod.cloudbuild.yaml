@@ -2,7 +2,7 @@
 # this means an Artifact Registry repo is needed in that region
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'europe-west1-docker.pkg.dev/yactouat/prod/php:$TAG_NAME', '-f', 'docker/php/prod.Dockerfile', '.']
+    args: ['build', '-t', 'europe-west1-docker.pkg.dev/yactouat/prod/php:$TAG_NAME', '-f', 'docker/php/deploy.Dockerfile', '.']
     id: Build
   - name: gcr.io/cloud-builders/docker
     args:
@@ -21,6 +21,7 @@ steps:
         --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID
       - '--region=europe-west1'
       - '--quiet'
+      - '--update-env-vars=APP_ENV=PROD'
     id: Deploy
     entrypoint: gcloud
 images:

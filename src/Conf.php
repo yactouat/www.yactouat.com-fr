@@ -7,6 +7,7 @@ namespace App;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader as TwigLoader;
+use Twig\TwigFilter;
 
 /**
  * this class is responsible for managing configuration for all and each envs
@@ -15,9 +16,6 @@ final class Conf
 {
     /** @var Environment the Twig instance that will be used in the app' */
     public Environment $twig;
-
-    /** @var string the root directory of the app' */
-    private string $_rootDir;
 
     /**
      * initialization logic of the configuration
@@ -29,7 +27,7 @@ final class Conf
      *
      * @return void
      */
-    public function __construct(string $rootDir)
+    public function __construct(private string $rootDir)
     {
         $this->_rootDir = $rootDir;
         $this->_initTwig();
@@ -46,11 +44,36 @@ final class Conf
     {
         $loader = new TwigLoader($this->_rootDir . '/views');
         $this->twig = new Environment($loader, [
-            'debug' => self::isDevEnv()
+            'debug' => self::isDevEnv(),
+            'cache' => false
         ]);
         if (self::isDevEnv()) {
             $this->twig->addExtension(new DebugExtension());
         }
+        $sectionsFilter = new TwigFilter('parseSection', function ($val) {
+            $section = '<section class="main_container-section">
+                <h3 class="main_container-section_heading">'
+                    . $val['heading']
+                . '</h3>
+                <div class="main_container-section_text">';
+            $areParagraphs = $val['paragraphs'] ?? false;
+            $areListItems= $val['listItems'] ?? false;
+            if ($areParagraphs) {
+                foreach ($val['paragraphs'] as $p) {
+                    $section .= '<p>' . $p . '</p>';
+                }
+            }
+            if ($areListItems) {
+                $section .= '<ul>';
+                foreach ($val['listItems'] as $li) {
+                    $section .= '<li>' . $li . '</li>';
+                }
+                $section .= '</ul>';
+            }
+            $section .= '</div></section>';
+            return $section;
+        });
+        $this->twig->addFilter($sectionsFilter);
     }
 
     /**
@@ -58,8 +81,9 @@ final class Conf
      *
      * - `display_errors` is supposed to be on
      * - `display_startup_errors` is supposed to be on
+     * when app' env is set to prod, returns true because there is nothing to check
      *
-     * @return bool when app' env is set to prod, returns true because there is nothing to check
+     * @return bool
      */
     public static function checkDevConf(): bool
     {
@@ -89,7 +113,8 @@ final class Conf
      */
     public static function isDevEnv(): bool
     {
-        return getenv(Constants::APP_ENV, true) === Constants::DEV_ENV;
+        $env = $_ENV[Constants::APP_ENV] ?? getenv(Constants::APP_ENV);
+        return $env === Constants::DEV_ENV;
     }
 
     /**
@@ -99,7 +124,8 @@ final class Conf
      */
     public static function isProdEnv(): bool
     {
-        return getenv(Constants::APP_ENV, true) === Constants::PROD_ENV;
+        $env = $_ENV[Constants::APP_ENV] ?? getenv(Constants::APP_ENV);
+        return $env === Constants::PROD_ENV;
     }
 
     /**

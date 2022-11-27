@@ -31,11 +31,22 @@
     </header>
 
     <main>
-        <h2 class="main_container_heading">Qui je suis</h2>
+        <h2 class="main_container_heading">Qui je suis</h2> 
         <div class="main_container">
-            {% for section in personalIntroSections %}
-                {{ section|parseSection|raw }}
-            {% endfor %}
+            <section class="main_container-section">
+                <h3 class="main_container-section_heading">Test pres section 1 h3</h3>
+                <div class="main_container-section_text">
+                    <p>Test pres section 1 p 1.</p>
+                    <p>Test pres section 1 p 2.</p>
+                </div>
+            </section>
+            <section class="main_container-section">
+                <h3 class="main_container-section_heading">Test pres section 2 h3</h3>
+                <div class="main_container-section_text">
+                    <p>Test pres section 2 p 1.</p>
+                    <p>Test pres section 2 p 2.</p>
+                </div>
+            </section>
         </div>
     </main>
 
