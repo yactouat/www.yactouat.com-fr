@@ -10,11 +10,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/styles.css">
+    {% block styleSheets %}{% endblock %}
 </head>
 <body>
 
     <header>
-        <img src="./assets/images/yactouat.jpeg" alt="yactouat's picture" />
+        <figure>
+            <img src="./assets/images/yactouat.jpeg" alt="yactouat's picture" />
+            <figcaption>&copy; Yacine Touati</figcaption>
+        </figure> 
         <h1>yactouat.fr</h1>
         <h2>web developer / mentor en développement web</h2>
         {% if withShortIntro is defined %}
@@ -42,7 +46,7 @@
                 src="./assets/images/google-cloud.png" 
                 alt="Google Cloud Platform logo"
                 class="responsive-img responsive-img-small"
-            /></a>
+            /></a> | &copy; Yacine Touati {{copyrightDate}} | yacine.touati.pro@gmail.com
         </p>
         {% if withoutLegalNoticeLink is not defined %}
             <p class="footer_legal">

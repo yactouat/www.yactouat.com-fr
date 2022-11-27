@@ -74,6 +74,7 @@ final class Conf
             return $section;
         });
         $this->twig->addFilter($sectionsFilter);
+        $this->twig->addGlobal('copyrightDate', intval(date('Y')) > 2022 ? '2022-' . date('Y') : '2022');
     }
 
     /**

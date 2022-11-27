@@ -22,7 +22,7 @@ final class IndexController extends Controller
     {
         $this->_responseData = is_null($data) ? [
             'mainHeading' => 'Qui je suis',
-            'personalIntroSections' => (new HardcodedPersonalIntroService())->getSections(),
+            'sections' => (new HardcodedPersonalIntroService())->getSections(),
             'title' => 'accueil',
             'withShortIntro' => true
         ] : $data;

@@ -21,11 +21,21 @@ final class LegalNoticeController extends Controller
     {
         $this->_responseData = is_null($data) ? [
             'mainHeading' => 'Mentions légales',
-            'personalIntroSections' => [
+            'sections' => [
                 [
                     'heading' => 'Directeur des publications:',
                     'paragraphs' => [
-                        'Yacine Touati.'
+                        'Nom: Yacine Touati.',
+                        'Adresse: 41 rue Kamm, 67000 Strasbourg, France.'
+                    ]
+                ],
+                [
+                    'heading' => 'Informations sur l\'hébergeur:',
+                    'paragraphs' => [
+                        'Nom: Google Ireland Limited.',
+                        'Raison Sociale: Google Cloud Platform.',
+                        'Adresse: Gordon House, Barrow Street, Dublin 4, Ireland.',
+                        'Téléphone: +35314361000.'
                     ]
                 ]
             ],

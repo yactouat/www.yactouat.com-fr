@@ -3,10 +3,16 @@
 
 {% block title %}{{title}}{% endblock %}
 
+{% block styleSheets %}
+    {% for styleSheet in styleSheets %}
+        <link rel="stylesheet" href="{{styleSheet}}">
+    {% endfor %}
+{% endblock %}
+
 {% block mainContent %}
     <h2 class="main_heading">{{mainHeading}}</h2>
     <div class="main_container">
-        {% for section in personalIntroSections %}
+        {% for section in sections %}
             {{ section|parseSection|raw }}
         {% endfor %}
     </div>

@@ -86,7 +86,7 @@ final class WebAppTest extends TestCase
         $webApp->routeTo(new Request());
         $webApp->getController()->setResponseData([
             'mainHeading' => 'Qui je suis',
-            'personalIntroSections' => [
+            'sections' => [
                 [
                     'heading' => 'Test pres section 1 h3',
                     'paragraphs' => [
