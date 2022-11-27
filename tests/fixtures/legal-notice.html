@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>yactouat.fr | {% block title %}{% endblock %}</title>
+    <title>yactouat.fr | mentions légales</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
@@ -17,11 +17,6 @@
         <img src="./assets/images/yactouat.jpeg" alt="yactouat's picture" />
         <h1>yactouat.fr</h1>
         <h2>web developer / mentor en développement web</h2>
-        {% if withShortIntro is defined %}
-            <p class="header_about-text">
-                Développeur web généraliste, curieux, motivé et positif; j'aime concevoir des solutions full stack afin de vous aider à relever vos challenges.
-            </p>
-        {% endif %}
         <div id="header_social-icons">
             <a class="header_social-icon" href="https://www.linkedin.com/in/yactouat/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
             <a class="header_social-icon" href="https://dev.to/yactouat" target="_blank"><i class="fa-brands fa-dev"></i></a>
@@ -33,7 +28,15 @@
     </header>
 
     <main>
-        {% block mainContent %}{% endblock %}
+        <h2 class="main_heading">Mentions légales</h2>
+        <div class="main_container">
+            <section class="main_container-section">
+                <h3 class="main_container-section_heading">Directeur des publications:</h3>
+                <div class="main_container-section_text">
+                    <p>Yacine Touati.</p>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer>
@@ -44,11 +47,6 @@
                 class="responsive-img responsive-img-small"
             /></a>
         </p>
-        {% if withoutLegalNoticeLink is not defined %}
-            <p class="footer_legal">
-                <a href="/mentions-legales">mentions légales</a>
-            </p>
-        {% endif %}
         <p class="footer_attr-text">
             <a href="https://www.flaticon.com/free-icons/google-cloud" title="google cloud icons">icone Google cloud créée par Freepik - Flaticon</a>
         </p>

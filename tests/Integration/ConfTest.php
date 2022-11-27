@@ -7,6 +7,7 @@ namespace Tests\Integration;
 use App\Conf;
 use App\Constants;
 use PHPUnit\Framework\TestCase;
+use Tests\Integration\Traits\TestConfTrait;
 use Twig\Environment;
 
 final class ConfTest extends TestCase

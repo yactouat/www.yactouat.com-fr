@@ -5,26 +5,25 @@ declare(strict_types=1);
 namespace App\Core;
 
 use App\Conf;
-use App\Constants;
+use App\Controllers\IndexController;
+use App\Controllers\LegalNoticeController;
+use App\Controllers\ServerErrorController;
+use App\Core\Http\Request;
 use App\Exceptions\Error\ConfKOException;
-use App\Services\PersonalIntroServiceInterface;
 
 /**
  * this class is responsible for building the response that will be sent to the client
  */
 final class WebApp
 {
-    /** @var Conf the configuration provided to the entry point of the app' */
+    /**
+     * the web app's configuration (Twig, ini values, etc.)
+     *
+     * @var Conf
+     */
     private Conf $_conf;
 
-    /** @var PersonalIntroServiceInterface the service that fetches yactouat's personal intro data */
-    private PersonalIntroServiceInterface $_personalIntroService;
-
-    /** @var string the HTTP response body that will be sent */
-    private string $_responseBody;
-
-    /** @var int the HTTP status code that will be send in the response */
-    private int $_statusCode;
+    private Controller $_controller;
 
     /**
      * checks app conf, throws if KO
@@ -41,13 +40,26 @@ final class WebApp
     }
 
     /**
+     * gets the controller in charge of building the constituants of the response
+     *
+     * @return Controller
+     */
+    public function getController(): Controller
+    {
+        return $this->_controller;
+    }
+
+    /**
      * gets the HTTP response body to be returned to the client
      *
      * @return string
      */
     public function getResponseBody(): string
     {
-        return $this->_responseBody;
+        return $this->_conf->twig->render(
+            $this->_controller->getResponseTemplate(),
+            $this->_controller->getResponseData()
+        );
     }
 
     /**
@@ -57,20 +69,31 @@ final class WebApp
      */
     public function getStatusCode(): int
     {
-        return $this->_statusCode;
+        return $this->_controller->getStatusCode();
     }
 
     /**
-     * sets the conf, the HTTP status code, and the response body
+     * sets the HTTP status code and the response body based on the input request
      *
-     * @return self
+     * @return void
      */
-    public function init(string $rootDir, PersonalIntroServiceInterface $personalIntroService): self
+    public function routeTo(Request $request): void
     {
-        return $this->setConf($rootDir)
-            ->setPersonalIntroService($personalIntroService)
-            ->setStatusCode()
-            ->setResponseBody();
+        try {
+            $this->checkConf();
+            $ctlr = match ($request->getUri()) {
+                '/' => IndexController::class,
+                '/mentions-legales' => LegalNoticeController::class,
+                // TODO not found controller
+                default => ServerErrorController::class
+            };
+            $this->_controller = (new $ctlr());
+        } catch (ConfKOException $e) {
+            $this->_controller = new ServerErrorController();
+        }
+        $this->_controller->setResponseData();
+        $this->_controller->setStatusCode();
+        $this->_controller->setResponseTemplate();
     }
 
     /**
@@ -79,53 +102,9 @@ final class WebApp
      * @param string $rootDir
      * @return self
      */
-    public function setConf(string $rootDir): self
+    public function setConf(string $rootDir): static
     {
         $this->_conf = new Conf($rootDir);
-        return $this;
-    }
-
-    public function setPersonalIntroService(PersonalIntroServiceInterface $personalIntroService): self
-    {
-        $this->_personalIntroService = $personalIntroService;
-        return $this;
-    }
-
-    /**
-     * dynamically sets the response body to send to the client
-     *
-     * @return self
-     */
-    public function setResponseBody(): self
-    {
-        try {
-            $this->checkConf();
-            $this->_responseBody = $this->_conf->twig->render("index.html.twig", [
-                'personalIntroSections' => $this->_personalIntroService->getSections(),
-                'title' => 'accueil',
-                'withPersonalIntro' => true
-            ]);
-        } catch (ConfKOException $cke) {
-            $this->_responseBody = $this->_conf->twig->render("500_error.html.twig", [
-                'title' => 'erreur serveur'
-            ]);
-        }
-        return $this;
-    }
-
-    /**
-     * dynamically sets the HTTP status code to send to the client
-     *
-     * @return self
-     */
-    public function setStatusCode(): self
-    {
-        try {
-            $this->checkConf();
-            $this->_statusCode = Constants::HTTP_OK_CODE;
-        } catch (ConfKOException $cke) {
-            $this->_statusCode = Constants::HTTP_SERVERERR_CODE;
-        }
         return $this;
     }
 }

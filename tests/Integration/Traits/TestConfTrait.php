@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration;
+namespace Tests\Integration\Traits;
 
 use App\Constants;
 
