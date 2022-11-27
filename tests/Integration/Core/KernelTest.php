@@ -24,6 +24,4 @@ final class KernelTest extends TestCase
         $actual = (new Kernel())->parseClientRequest()->getRequest()->getUri();
         $this->assertEquals($expected, $actual);
     }
-
-    // TODO test with `mentions-legales` route
 }

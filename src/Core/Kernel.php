@@ -70,6 +70,4 @@ final class Kernel
         $this->_rootDir = $rootDir;
         return $this;
     }
-
-    // TODO test routing + output to legal page
 }

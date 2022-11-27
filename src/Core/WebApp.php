@@ -84,7 +84,6 @@ final class WebApp
             $ctlr = match ($request->getUri()) {
                 '/' => IndexController::class,
                 '/mentions-legales' => LegalNoticeController::class,
-                // TODO not found controller
                 default => ServerErrorController::class
             };
             $this->_controller = (new $ctlr());
