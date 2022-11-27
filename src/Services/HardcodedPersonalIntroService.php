@@ -10,7 +10,7 @@ use Exception;
 
 final class HardcodedPersonalIntroService implements PersonalIntroServiceInterface
 {
-    public function __construct(private array $_sections = [])
+    public function __construct()
     {
         $this->setSections([
             [

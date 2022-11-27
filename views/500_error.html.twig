@@ -1,43 +1,21 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>yactouat.fr | erreur serveur</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/styles.css">
-</head>
-<body>
 
-    <header>
-        <img src="./assets/images/yactouat.jpeg" alt="yactouat's picture" />
-        <h1>yactouat.fr</h1>
-        <h2>web developer / mentor en développement web</h2>
-        <div id="header_social-icons">
-            <a class="header_social-icon" href="https://www.linkedin.com/in/yactouat/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-            <a class="header_social-icon" href="https://dev.to/yactouat" target="_blank"><i class="fa-brands fa-dev"></i></a>
-            <a class="header_social-icon" href="https://github.com/yactouat" target="_blank"><i class="fa-brands fa-github"></i></a>
-            <a class="header_social-icon" href="https://twitter.com/yactouat" target="_blank"><i class="fa-brands fa-twitter"></i></a>
-            <a class="header_social-icon" href="https://stackoverflow.com/users/9499355/yactouat" target="_blank"><i class="fa-brands fa-stack-overflow"></i></a>
-            <a class="header_social-icon" href="https://www.meetup.com/fr-FR/members/313767573/" target="_blank"><i class="fa-brands fa-meetup"></i></a>
-        </div>
-    </header>
+{% extends "layout.html.twig" %}
 
-    <main>
-        <h2 class="main_container_heading">Oops ! Nous rencontrons des difficultés côté serveur 😬.</h2> 
-        <div class="main_container flex-centered flex-dir">
-            <h3 class="main_container-section_heading">Veuillez réessayer plus tard</h3>
-            <section class="main_container-section flex-centered">
-                <img src="./assets/images/500_error.gif" class="responsive-img">
-            </section>
-        </div>
-    </main>
+{% block title %}{{title}}{% endblock %}
 
-    <script src="https://kit.fontawesome.com/2ca8f27d54.js" crossorigin="anonymous"></script>
-
-</body>
-</html>
+{% block mainContent %}
+    <h2 class="main_heading">Oops ! Nous rencontrons des difficultés côté serveur 😬.</h2> 
+    <div class="main_container flex-centered flex-dir">
+        <h3 class="main_container-section_heading">Veuillez réessayer plus tard</h3>
+        <section class="main_container-section flex-centered">
+            <figure>
+                <img 
+                    src="./assets/images/500_error.jpg" 
+                    class="responsive-img responsive-img-large"
+                    alt="illustration d'erreur serveur"
+                >
+                <figcaption>illustration d'erreur serveur | <a href="https://www.freepik.com/free-vector/system-critical-failure-alert-system-message-data-center-view-server-room-with-workers-racks-heat-removing-system-high-temperature-overheat-error_24070628.htm#query=server%20error&position=3&from_view=search&track=sph">image par  jcomp</a> sur Freepik</figcaption>
+            </figure>
+        </section>
+    </div>
+{% endblock %}

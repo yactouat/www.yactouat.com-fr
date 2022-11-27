@@ -24,7 +24,7 @@ exec('./vendor/bin/php-cs-fixer fix tests');
 // run tests
 echo PHP_EOL.'Running PHPUnit tests...'.PHP_EOL;
 exec(
-    'docker exec -t wwwyactouatcom-fr-app-1 bash -c "/var/www/html/vendor/bin/phpunit --testdox --colors /var/www/html/tests"',
+    'docker exec -t wwwyactouatcom-fr-app-1 bash -c "XDEBUG_MODE=off /var/www/html/vendor/bin/phpunit --testdox --colors /var/www/html/tests"',
     $unitTestsOutput,
     $unitTestReturnCode
 );
