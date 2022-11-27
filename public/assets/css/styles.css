@@ -33,7 +33,7 @@
     padding: 0;
     margin: 0;
 }
-*::not(i) {
+*:not(i) {
     font-family: 'Roboto', sans-serif;
     color: var(--primary-color);
 }
